@@ -6,6 +6,7 @@ import {
   ProductController,
   OrderController,
   OrderItemController,
+  ProductImageController,
 } from './controllers';
 import { DomainModule } from '../domain';
 import { PaymentController } from './controllers/paymentController';
@@ -16,6 +17,7 @@ import { PaymentController } from './controllers/paymentController';
     CustomerController,
     CategoryController,
     ProductController,
+    ProductImageController,
     OrderController,
     OrderItemController,
     PaymentController,

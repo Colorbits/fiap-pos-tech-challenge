@@ -9,6 +9,7 @@ import { CategoryEntity } from '../repositories/category';
 import { OrderEntity } from '../repositories/order';
 import { OrderItemEntity } from '../repositories/orderItem';
 import { UserEntity } from '../repositories/user';
+import { ProductImageEntity } from '../repositories/productImage';
 
 dotenvConfig({ path: process.cwd() + '/envs/.env.local' });
 
@@ -28,6 +29,7 @@ dotenvConfig({ path: process.cwd() + '/envs/.env.local' });
           entities: [
             CustomerEntity,
             ProductEntity,
+            ProductImageEntity,
             CategoryEntity,
             OrderEntity,
             OrderItemEntity,

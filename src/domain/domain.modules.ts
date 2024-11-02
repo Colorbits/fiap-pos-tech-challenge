@@ -6,12 +6,14 @@ import {
   OrderService,
   OrderItemService,
   PaymentService,
+  ProductImageService,
 } from './services';
 
 @Module({
   providers: [
     { provide: 'IService<Customer>', useClass: CustomerService },
     { provide: 'IService<Product>', useClass: ProductService },
+    { provide: 'IService<ProductImage>', useClass: ProductImageService },
     { provide: 'IService<Category>', useClass: CategoryService },
     { provide: 'IService<Order>', useClass: OrderService },
     { provide: 'IService<OrderItem>', useClass: OrderItemService },
@@ -20,6 +22,7 @@ import {
   exports: [
     { provide: 'IService<Customer>', useClass: CustomerService },
     { provide: 'IService<Product>', useClass: ProductService },
+    { provide: 'IService<ProductImage>', useClass: ProductImageService },
     { provide: 'IService<Category>', useClass: CategoryService },
     { provide: 'IService<Order>', useClass: OrderService },
     { provide: 'IService<OrderItem>', useClass: OrderItemService },

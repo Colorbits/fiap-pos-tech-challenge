@@ -24,11 +24,8 @@ export class ProductService implements IService<Product> {
       name: productDto.name,
       price: productDto.price,
       status: productDto.status,
+      description: productDto.description,
       category,
-
-      // TODO: implement following fields
-      // descricao: produtoEntity.descricao,
-      // imagemBase64: produtoEntity.imagemBase64,
     };
     return this.productRepository.create(product);
   }
@@ -42,11 +39,8 @@ export class ProductService implements IService<Product> {
       name: productDto.name,
       price: productDto.price,
       status: productDto.status,
+      description: productDto.description,
       category,
-
-      // TODO: implement following fields
-      // descricao: produtoEntity.descricao,
-      // imagemBase64: produtoEntity.imagemBase64,
     };
     return this.productRepository.edit(product);
   }
