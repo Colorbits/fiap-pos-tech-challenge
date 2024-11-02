@@ -4,6 +4,7 @@ import { DatabaseConstants } from '../postgres/postgres.constants';
 import { PostgresConfg } from '../postgres/postgres.config';
 import { OrderInDbRepository, OrderEntity } from './order';
 import { ProductInDbRepository, ProductEntity } from './product';
+import { ProductImageEntity, ProductImageInDbRepository } from './productImage';
 import { CustomerInDbRepository, CustomerEntity } from './customer';
 import { CategoryInDbRepository, CategoryEntity } from './category';
 import { OrderItemInDbRepository, OrderItemEntity } from './orderItem';
@@ -15,6 +16,7 @@ import { UserInDbRepository, UserEntity } from './user';
     TypeOrmModule.forFeature([
       CustomerEntity,
       ProductEntity,
+      ProductImageEntity,
       CategoryEntity,
       OrderEntity,
       OrderItemEntity,
@@ -29,6 +31,10 @@ import { UserInDbRepository, UserEntity } from './user';
   providers: [
     { provide: 'IRepository<Customer>', useClass: CustomerInDbRepository },
     { provide: 'IRepository<Product>', useClass: ProductInDbRepository },
+    {
+      provide: 'IRepository<ProductImage>',
+      useClass: ProductImageInDbRepository,
+    },
     { provide: 'IRepository<Category>', useClass: CategoryInDbRepository },
     { provide: 'IRepository<Order>', useClass: OrderInDbRepository },
     { provide: 'IRepository<OrderItem>', useClass: OrderItemInDbRepository },
@@ -37,6 +43,10 @@ import { UserInDbRepository, UserEntity } from './user';
   exports: [
     { provide: 'IRepository<Customer>', useClass: CustomerInDbRepository },
     { provide: 'IRepository<Product>', useClass: ProductInDbRepository },
+    {
+      provide: 'IRepository<ProductImage>',
+      useClass: ProductImageInDbRepository,
+    },
     { provide: 'IRepository<Category>', useClass: CategoryInDbRepository },
     { provide: 'IRepository<Order>', useClass: OrderInDbRepository },
     { provide: 'IRepository<OrderItem>', useClass: OrderItemInDbRepository },
