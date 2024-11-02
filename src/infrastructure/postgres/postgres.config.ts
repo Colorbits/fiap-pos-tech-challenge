@@ -8,8 +8,8 @@ import { ProductEntity } from '../repositories/product';
 import { CategoryEntity } from '../repositories/category';
 import { OrderEntity } from '../repositories/order';
 import { OrderItemEntity } from '../repositories/orderItem';
-import { ProductImageEntity } from '../repositories/productImage';
 import { UserEntity } from '../repositories/user';
+import { ProductImageEntity } from '../repositories/productImage';
 
 dotenvConfig({ path: process.cwd() + '/envs/.env.local' });
 
