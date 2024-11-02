@@ -8,6 +8,8 @@ export class ProductDto {
   id: number;
   @IsNotEmpty()
   name: string;
+  @IsOptional()
+  description: string;
   @IsNotEmpty()
   price: string;
   @IsNotEmpty()
@@ -34,6 +36,7 @@ export class FilterProductDto {
 export class Product {
   id?: number;
   name: string;
+  description: string;
   price: string;
   status: ProductStatusEnum;
   category: Category;
@@ -41,6 +44,7 @@ export class Product {
   constructor(productDto: ProductDto, category: Category) {
     this.id = productDto?.id || randomInt(999);
     this.name = productDto.name;
+    this.description = productDto.description;
     this.price = productDto.price;
     this.status = productDto.status;
     this.category = category;
