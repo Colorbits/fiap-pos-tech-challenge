@@ -137,6 +137,22 @@ A implementação deste sistema visa resolver problemas comuns em lanchonetes em
 Este projeto deve ser executado em um ambiente Docker, dispensando qualquer instalação adicional.
 Se você não possui o Docker instalado, siga as instruções para seu sistema operacional na [documentação oficial do Docker](https://docs.docker.com/get-docker).
 
+#### 1 - Crie um arquivo .env.local em na pasta /envs localizada na raiz do projeto
+
+#### 2 - Adicione o seguinte conteudo ao arquivo criado
+
+`
+ENV=local
+PORT=3000
+POSTGRES_HOST=localhost
+POSTGRES_PORT=3306
+POSTGRES_USER=fiapuser
+POSTGRES_PASSWORD=123456
+POSTGRES_ROOT_PASSWORD=root
+POSTGRES_DATABASE=fiap-pos-tech-challenge
+`
+
+#### 3 - Inicialize o projeto executando o seguinte comando no temrinal
 `npm run start:docker`
 
 
