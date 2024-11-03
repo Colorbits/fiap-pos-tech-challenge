@@ -42,7 +42,7 @@ export class ProductInDbRepository implements IRepository<Product> {
     return this.repository
       .createQueryBuilder('product')
       .leftJoinAndSelect('product.category', 'category')
-      .innerJoinAndSelect('product.productImages', 'productImages')
+      .leftJoinAndSelect('product.productImages', 'productImages')
       .where(whereClause, {
         categoryId,
       })

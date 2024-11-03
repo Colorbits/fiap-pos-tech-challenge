@@ -22,13 +22,12 @@ export class PaymentService implements IPaymentService {
   }
 
   async payOrder(paymentDto: PaymentDto): Promise<string> {
-    const orders = await this.orderRepository.find(paymentDto.orderId);
+    const order = await this.orderRepository.findById(paymentDto.orderId);
 
-    if (!orders?.length) {
+    if (!order) {
       throw new HttpException('Order Not Found', HttpStatus.NOT_FOUND);
     }
 
-    const [order] = orders;
     if (order.status === OrderStatusEnum.CANCELED) {
       throw new HttpException('Order has been cancelled', HttpStatus.FORBIDDEN);
     }
@@ -61,7 +60,7 @@ export class PaymentService implements IPaymentService {
     if (paymentDto.paymentMethod === PaymentMethodEnum.QR_CODE) {
       try {
         const paymentResult = this.generateQrCodePaymentUrl(order);
-
+        console.log(order);
         await this.orderRepository.edit({
           ...order,
           status: OrderStatusEnum.WAITING_PAYMENT,
