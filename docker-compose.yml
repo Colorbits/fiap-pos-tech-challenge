@@ -22,7 +22,7 @@ services:
       PORT: "${PORT}"
       ENV: "${ENV}"
       POSTGRES_HOST: db
-      POSTGRES_PORT: 5432
+      POSTGRES_PORT: "${POSTGRES_PORT}"
       POSTGRES_USER: "${POSTGRES_USER}"
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
       POSTGRES_DATABASE: "${POSTGRES_DATABASE}"
@@ -46,10 +46,11 @@ services:
       POSTGRES_DB: "${POSTGRES_DATABASE}"
       POSTGRES_USER: "${POSTGRES_USER}"
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
+      PGPORT: "${POSTGRES_PORT}"
     # Se você quer acessar o banco de dados por uma ferramenta externa, descomente as duas linhas seguintes para exportar o
     # postgres na porta 5432 do host (ou ajuste a porta que deseja mapear do host).
     ports:
-      - "5432:5432"
+      - "${POSTGRES_PORT}:${POSTGRES_PORT}"
     networks:
       - internal
     volumes:
