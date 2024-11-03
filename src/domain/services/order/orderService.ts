@@ -28,11 +28,11 @@ export class OrderService implements IService<Order> {
   }
 
   findAll(): Promise<Order[]> {
-    return this.orderRepository.findAll();
+    throw new HttpException('Not implemented', HttpStatus.FORBIDDEN);
   }
 
-  find(orderId: number): Promise<Order[]> {
-    return this.orderRepository.find(orderId);
+  find(orderId: number, status: string): Promise<Order[]> {
+    return this.orderRepository.find(orderId, status);
   }
 
   findById(orderId: number): Promise<Order> {

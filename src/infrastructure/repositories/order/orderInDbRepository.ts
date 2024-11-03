@@ -28,12 +28,24 @@ export class OrderInDbRepository implements IRepository<Order> {
     }
   }
 
-  find(orderId: number): Promise<Order[]> {
+  find(customerId: number, status: string): Promise<Order[]> {
+    let customerIdClause = '';
+    let statusClause = '';
+
+    if (customerId) {
+      customerIdClause += 'order.userId = :customerId';
+    }
+
+    if (status) {
+      statusClause += 'order.status = :status';
+    }
+
     return this.repository
       .createQueryBuilder('order')
-      .where('order.id = :orderId', {
-        orderId: orderId,
+      .where(customerIdClause, {
+        customerId,
       })
+      .andWhere(statusClause, { status })
       .getMany()
       .catch((error) => {
         throw new HttpException(

@@ -18,60 +18,120 @@ export class OrderItemService implements IService<OrderItem> {
     @Inject('IRepository<Product>')
     private readonly productRepository: IRepository<Product>,
   ) {}
-  findById(): Promise<OrderItem> {
-    throw new HttpException('Method not implemented.', HttpStatus.FORBIDDEN);
-  }
 
   async create(orderItemDto: OrderItemDto): Promise<OrderItem> {
-    const product = await this.productRepository.findById(
-      orderItemDto.productId,
-    );
-    const order = await this.orderRepository.findById(orderItemDto.orderId);
-    const createdOrderItem = await this.orderItemRepository.create({
-      order,
-      product,
-      productPrice: product.price,
-      quantity: orderItemDto.quantity,
-    });
+    try {
+      const product = await this.productRepository.findById(
+        orderItemDto.productId,
+      );
+      const order = await this.orderRepository.findById(orderItemDto.orderId);
+      const createdOrderItem = await this.orderItemRepository.create({
+        id: orderItemDto?.id,
+        order,
+        product,
+        productPrice: product.price,
+        quantity: orderItemDto.quantity,
+      });
 
-    const orderItems = await this.orderItemRepository.find(
-      orderItemDto.orderId,
-    );
+      const orderItems = await this.orderItemRepository.find(
+        orderItemDto.orderId,
+      );
 
-    console.log(
-      'orderItemsPrices',
-      orderItems.map((item) => item.productPrice),
-    );
-    const totalPrice = orderItems.reduce((sum, current) => {
-      return Number(sum) + Number(current.productPrice) * current.quantity;
-    }, 0);
-    console.log('totalPrice', totalPrice);
-    await this.orderRepository.edit({
-      ...order,
-      totalPrice: `${totalPrice}`,
-    });
-    return createdOrderItem;
+      const totalPrice = orderItems.reduce((sum, current) => {
+        return Number(sum) + Number(current.productPrice) * current.quantity;
+      }, 0);
+
+      await this.orderRepository.edit({
+        ...order,
+        totalPrice: `${totalPrice}`,
+      });
+      return createdOrderItem;
+    } catch (error) {
+      throw new HttpException(
+        `Error when creating order item: ${error.message}`,
+        HttpStatus.FORBIDDEN,
+      );
+    }
   }
 
   findAll(): Promise<OrderItem[]> {
-    return this.orderItemRepository.findAll();
+    throw new HttpException('Method not implemented.', HttpStatus.FORBIDDEN);
   }
 
-  findByOrderId(orderId: number): Promise<OrderItem[]> {
+  find(orderId: number): Promise<OrderItem[]> {
     return this.orderItemRepository.find(orderId);
   }
 
-  find(): Promise<OrderItem[]> {
-    throw new HttpException('Method not implemented.', HttpStatus.FORBIDDEN);
+  findById(orderId: number): Promise<OrderItem> {
+    return this.orderItemRepository.findById(orderId);
   }
 
-  edit(): Promise<OrderItem> {
-    // TODO: update order price after updating item
-    throw new HttpException('Method not implemented.', HttpStatus.FORBIDDEN);
+  async edit(orderItemDto: OrderItemDto): Promise<OrderItem> {
+    try {
+      const orderItem = await this.orderItemRepository.findById(
+        orderItemDto.id,
+      );
+
+      if (!orderItem?.order?.id) {
+        throw new HttpException(`Order item not found.`, HttpStatus.NOT_FOUND);
+      }
+
+      const product = await this.productRepository.findById(
+        orderItemDto.productId,
+      );
+
+      const order = await this.orderRepository.findById(orderItem.order.id);
+      const createdOrderItem = await this.orderItemRepository.edit({
+        ...orderItem,
+        order,
+        product,
+        productPrice: product.price,
+        quantity: orderItemDto.quantity,
+      });
+
+      const orderItems = await this.orderItemRepository.find(order.id);
+
+      const totalPrice = orderItems.reduce((sum, current) => {
+        return Number(sum) + Number(current.productPrice) * current.quantity;
+      }, 0);
+      console.log('console.log edit orderItem', orderItem);
+
+      await this.orderRepository.edit({
+        ...order,
+        totalPrice: `${totalPrice}`,
+      });
+      return createdOrderItem;
+    } catch (error) {
+      throw new HttpException(
+        `Error when editing order item: ${error.message}`,
+        HttpStatus.FORBIDDEN,
+      );
+    }
   }
 
-  delete(id: number): Promise<void> {
-    // TODO: update order price after deleting item
-    return this.orderItemRepository.delete(id);
+  async delete(orderItemId: number): Promise<void> {
+    try {
+      const orderItem = await this.orderItemRepository.findById(orderItemId);
+      const order = await this.orderRepository.findById(orderItem.order.id);
+      await this.orderItemRepository.delete(orderItemId);
+
+      const orderItems = await this.orderItemRepository.find(
+        orderItem.order.id,
+      );
+
+      const totalPrice = orderItems.reduce((sum, current) => {
+        return Number(sum) + Number(current.productPrice) * current.quantity;
+      }, 0);
+
+      await this.orderRepository.edit({
+        ...order,
+        totalPrice: `${totalPrice}`,
+      });
+    } catch (error) {
+      throw new HttpException(
+        `Error when editing order item: ${error.message}`,
+        HttpStatus.FORBIDDEN,
+      );
+    }
   }
 }
