@@ -18,9 +18,9 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "start:docker": "docker compose --env-file envs/.env.prod  up -d --build ",
-    "stop:docker": "docker compose --env-file envs/.env.prod down",
-    "purge:docker": "docker compose --env-file envs/.env.prod down -v",
+    "start:docker": "docker compose --env-file envs/.env.local  up -d --build ",
+    "stop:docker": "docker compose --env-file envs/.env.local down",
+    "purge:docker": "docker compose --env-file envs/.env.local down -v",
     "stop:prod:docker": "docker compose down"
   },
   "dependencies": {
