@@ -5,7 +5,7 @@ import { MemoryDatabaseModule } from './memory-database.module';
 @Module({})
 export class RepositoryModule {
   static forFeature(): DynamicModule {
-    if (process.env.NODE_ENV === 'USE-MEMORY-REPOSITORY') {
+    if (process.env.USE_MEMORY_REPOSITORY) {
       return {
         module: MemoryDatabaseModule,
         exports: [MemoryDatabaseModule],
