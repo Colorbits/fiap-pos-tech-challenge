@@ -11,8 +11,20 @@ export class OrderItemInDbRepository implements IRepository<OrderItem> {
     @InjectRepository(OrderItemEntity)
     private repository: Repository<OrderItemEntity>,
   ) {}
-  findById(): Promise<OrderItem> {
-    throw new HttpException('Method not implemented.', HttpStatus.FORBIDDEN);
+  findById(id: number): Promise<OrderItem> {
+    return this.repository
+      .createQueryBuilder('orderItem')
+      .leftJoinAndSelect('orderItem.order', 'order')
+      .where('orderItem.id = :id', {
+        id: id,
+      })
+      .getOne()
+      .catch((error) => {
+        throw new HttpException(
+          `An error occurred while searching the order in the database: ${error.message}`,
+          HttpStatus.INTERNAL_SERVER_ERROR,
+        );
+      });
   }
 
   create(orderItem: OrderItem): Promise<OrderItem> {
@@ -56,11 +68,27 @@ export class OrderItemInDbRepository implements IRepository<OrderItem> {
       });
   }
 
-  delete(): Promise<void> {
-    throw new HttpException('Method not implemented.', HttpStatus.FORBIDDEN);
+  async delete(id: number): Promise<void> {
+    try {
+      await this.repository.delete(id);
+    } catch (error) {
+      new HttpException(
+        `An error occurred while saving the orderItem to the database: ${error.message}`,
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
   }
 
-  edit(): Promise<OrderItem> {
-    throw new HttpException('Method not implemented.', HttpStatus.FORBIDDEN);
+  edit(orderItem: OrderItem): Promise<OrderItem> {
+    try {
+      return this.repository
+        .update(orderItem.id, orderItem)
+        .then(() => orderItem);
+    } catch (error) {
+      new HttpException(
+        `An error occurred while saving the orderItem to the database: ${error.message}`,
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
   }
 }

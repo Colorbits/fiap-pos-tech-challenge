@@ -9,10 +9,11 @@ import {
   Param,
   Post,
   Put,
+  Query,
 } from '@nestjs/common';
 import { ApiQuery } from '@nestjs/swagger';
 import { IService } from '../../domain/iService';
-import { Order, OrderDto } from '../../shared/models';
+import { FilterOrderDto, Order, OrderDto } from '../../shared/models';
 
 @Controller('order')
 export class OrderController {
@@ -20,11 +21,6 @@ export class OrderController {
   constructor(
     @Inject('IService<Order>') private orderService: IService<Order>,
   ) {}
-
-  @Get()
-  findAll(): Promise<Order[]> {
-    return this.orderService.findAll();
-  }
 
   @ApiQuery({
     name: 'id',
@@ -41,13 +37,19 @@ export class OrderController {
     type: String,
     required: true,
   })
-  @Get(':params')
-  find(): Promise<Order[]> {
-    return this.orderService.findAll();
+  @Get()
+  find(@Query() filterOrderDto: FilterOrderDto): Promise<Order[]> {
+    console.log('find', filterOrderDto);
+
+    return this.orderService.find(
+      filterOrderDto.customerId,
+      filterOrderDto.status,
+    );
   }
 
-  @Get(':id')
+  @Get('/:id')
   findById(@Param('id') id?: number): Promise<Order> {
+    console.log('findById', id);
     return this.orderService.findById(id);
   }
 
