@@ -18,6 +18,8 @@ export class OrderItemDto {
 
   @IsNotEmpty()
   quantity: number;
+  @IsNotEmpty()
+  productPrice: string;
 }
 
 export class FilterOrderItemDto {
@@ -44,6 +46,7 @@ export class OrderItem {
   constructor(orderItemDto: OrderItemDto, product: Product) {
     this.id = orderItemDto?.id || randomInt(999);
     this.quantity = orderItemDto.quantity;
+    this.productPrice = orderItemDto.productPrice;
     this.product = product;
   }
 }

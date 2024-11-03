@@ -2,22 +2,19 @@ import {
   Controller,
   Delete,
   Get,
+  HttpException,
+  HttpStatus,
   Inject,
   Logger,
   Param,
   Post,
-  Query,
   Res,
   UploadedFile,
   UseInterceptors,
 } from '@nestjs/common';
 import { diskStorage } from 'multer';
 import { IService } from '../../domain/iService';
-import {
-  FilterProductImageDto,
-  ProductImage,
-  ProductImageDto,
-} from '../../shared/models';
+import { ProductImage, ProductImageDto } from '../../shared/models';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiConsumes } from '@nestjs/swagger';
 import { extname } from 'path';
@@ -36,7 +33,10 @@ export const editFileName = (req, file, callback) => {
 
 export const imageFileFilter = (req, file, callback) => {
   if (!file.originalname.match(/\.(jpg|jpeg|png|gif)$/)) {
-    return callback(new Error('Only image files are allowed!'), false);
+    return callback(
+      new HttpException('Only image files are allowed!', HttpStatus.FORBIDDEN),
+      false,
+    );
   }
   callback(null, true);
 };

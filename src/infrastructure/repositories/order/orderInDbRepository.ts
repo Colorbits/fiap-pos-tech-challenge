@@ -1,5 +1,5 @@
 import { Repository } from 'typeorm';
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Order } from '../../../shared/models';
 import { OrderEntity } from './orderEntity';
@@ -21,8 +21,9 @@ export class OrderInDbRepository implements IRepository<Order> {
       });
       return createdOrder;
     } catch (error) {
-      throw new Error(
+      throw new HttpException(
         `An error occurred while saving the order to the database: '${JSON.stringify(order)}': ${error.message}`,
+        HttpStatus.INTERNAL_SERVER_ERROR,
       );
     }
   }
@@ -35,8 +36,9 @@ export class OrderInDbRepository implements IRepository<Order> {
       })
       .getMany()
       .catch((error) => {
-        throw new Error(
+        throw new HttpException(
           `An error occurred while searching the order in the database: ${error.message}`,
+          HttpStatus.INTERNAL_SERVER_ERROR,
         );
       });
   }
@@ -55,8 +57,9 @@ export class OrderInDbRepository implements IRepository<Order> {
         }));
       })
       .catch((error) => {
-        throw new Error(
-          `An error occurred while creating an order in the database: ${error.message}`,
+        throw new HttpException(
+          `An error occurred while searching the order in the database: ${error.message}`,
+          HttpStatus.INTERNAL_SERVER_ERROR,
         );
       });
   }
@@ -69,14 +72,15 @@ export class OrderInDbRepository implements IRepository<Order> {
       })
       .getOne()
       .catch((error) => {
-        throw new Error(
+        throw new HttpException(
           `An error occurred while searching the order in the database: ${error.message}`,
+          HttpStatus.INTERNAL_SERVER_ERROR,
         );
       });
   }
 
-  delete(id): Promise<void> {
-    throw new Error('Method not implemented.' + id);
+  delete(): Promise<void> {
+    throw new HttpException('Method not implemented.', HttpStatus.FORBIDDEN);
   }
 
   async edit(order: Order): Promise<Order> {
@@ -85,8 +89,9 @@ export class OrderInDbRepository implements IRepository<Order> {
 
       return updatedOrder;
     } catch (error) {
-      throw new Error(
-        `An error occurred while saving the order to the database: '${JSON.stringify(order)}': ${error.message}`,
+      throw new HttpException(
+        `An error occurred while saving the order to the database: ${error.message}`,
+        HttpStatus.INTERNAL_SERVER_ERROR,
       );
     }
   }

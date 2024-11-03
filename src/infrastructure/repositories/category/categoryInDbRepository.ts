@@ -1,5 +1,5 @@
 import { Repository } from 'typeorm';
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Category } from '../../../shared/models';
 import { CategoryEntity } from './categoryEntity';
@@ -18,16 +18,18 @@ export class CategoryInDbRepository implements IRepository<Category> {
       .where('category.id = :id', { id: id })
       .getOne()
       .catch((error) => {
-        throw new Error(
+        throw new HttpException(
           `An error occurred while searching the category in the database: '${JSON.stringify(id)}': ${error.message}`,
+          HttpStatus.INTERNAL_SERVER_ERROR,
         );
       });
   }
 
   create(category: Category): Promise<Category> {
     return this.repository.save(category).catch((error) => {
-      throw new Error(
+      throw new HttpException(
         `An error occurred while creating the category to the database: '${JSON.stringify(category)}': ${error.message}`,
+        HttpStatus.INTERNAL_SERVER_ERROR,
       );
     });
   }
@@ -45,8 +47,9 @@ export class CategoryInDbRepository implements IRepository<Category> {
         );
       })
       .catch((error) => {
-        throw new Error(
+        throw new HttpException(
           `An error occurred while searching the category in the database: ${error.message}`,
+          HttpStatus.INTERNAL_SERVER_ERROR,
         );
       });
   }
@@ -57,8 +60,9 @@ export class CategoryInDbRepository implements IRepository<Category> {
       .where('category.id = :id', { id: id })
       .getMany()
       .catch((error) => {
-        throw new Error(
+        throw new HttpException(
           `An error occurred while searching the category in the database: '${JSON.stringify(id)}': ${error.message}`,
+          HttpStatus.INTERNAL_SERVER_ERROR,
         );
       });
   }
@@ -72,8 +76,9 @@ export class CategoryInDbRepository implements IRepository<Category> {
       .update(category.id, category)
       .then(() => category)
       .catch((error) => {
-        throw new Error(
+        throw new HttpException(
           `An error occurred while editing the category to the database: '${JSON.stringify(category)}': ${error.message}`,
+          HttpStatus.INTERNAL_SERVER_ERROR,
         );
       });
   }

@@ -1,5 +1,5 @@
 import { Repository } from 'typeorm';
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { OrderItemEntity } from './orderItemEntity';
 import { IRepository } from '../iRepository';
@@ -12,22 +12,22 @@ export class OrderItemInDbRepository implements IRepository<OrderItem> {
     private repository: Repository<OrderItemEntity>,
   ) {}
   findById(): Promise<OrderItem> {
-    throw new Error('Method not implemented.');
+    throw new HttpException('Method not implemented.', HttpStatus.FORBIDDEN);
   }
 
   create(orderItem: OrderItem): Promise<OrderItem> {
-    return this.repository
-      .save(orderItem)
-      .then((orderItemEntity) => orderItemEntity)
-      .catch((error) => {
-        throw new Error(
-          `An error occurred while saving the orderItem to the database: '${JSON.stringify(orderItem)}': ${error.message}`,
-        );
-      });
+    try {
+      return this.repository.save(orderItem);
+    } catch (error) {
+      new HttpException(
+        `An error occurred while saving the orderItem to the database: ${error.message}`,
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
   }
 
   findAll(): Promise<OrderItem[]> {
-    throw new Error('Method not implemented.');
+    throw new HttpException('Method not implemented.', HttpStatus.FORBIDDEN);
   }
 
   find(orderId: number): Promise<OrderItem[]> {
@@ -49,17 +49,18 @@ export class OrderItemInDbRepository implements IRepository<OrderItem> {
         }));
       })
       .catch((error) => {
-        throw new Error(
-          `An error occurred while searching the orderItem in the database: '${JSON.stringify(orderId)}': ${error.message}`,
+        throw new HttpException(
+          `An error occurred while searching the orderItem in the database: ${error.message}`,
+          HttpStatus.INTERNAL_SERVER_ERROR,
         );
       });
   }
 
-  delete(id): Promise<void> {
-    throw new Error('Method not implemented.' + id);
+  delete(): Promise<void> {
+    throw new HttpException('Method not implemented.', HttpStatus.FORBIDDEN);
   }
 
   edit(): Promise<OrderItem> {
-    throw new Error('Method not implemented.');
+    throw new HttpException('Method not implemented.', HttpStatus.FORBIDDEN);
   }
 }

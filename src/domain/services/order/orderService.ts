@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { Customer, Order, OrderDto } from '../../../shared/models';
 import { IService } from '../../iService';
 import { OrderStatusEnum } from '../../../shared';
@@ -16,7 +16,7 @@ export class OrderService implements IService<Order> {
     const user = await this.customerRepository.findById(orderDto.customerId);
 
     if (!user) {
-      throw new Error('Customer not provided');
+      throw new HttpException('Customer not provided', HttpStatus.FORBIDDEN);
     }
 
     return this.orderRepository.create({

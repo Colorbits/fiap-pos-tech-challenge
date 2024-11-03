@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { Product } from '../../../shared/models/product';
 import { IRepository } from '../iRepository';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -17,7 +17,7 @@ export class ProductInDbRepository implements IRepository<Product> {
   ) {}
 
   findAll(): Promise<Product[]> {
-    throw new Error('Method not implemented.');
+    throw new HttpException('Method not implemented.', HttpStatus.FORBIDDEN);
   }
 
   async create(product: Product): Promise<Product> {
@@ -25,8 +25,9 @@ export class ProductInDbRepository implements IRepository<Product> {
       .save(product)
       .then((productEntity) => productEntity)
       .catch((error) => {
-        throw new Error(
-          `An error occurred while saving the product to the database: '${JSON.stringify(product)}': ${error.message}`,
+        throw new HttpException(
+          `An error occurred while searching the orderItem in the database: ${error.message}`,
+          HttpStatus.INTERNAL_SERVER_ERROR,
         );
       });
   }
@@ -47,8 +48,9 @@ export class ProductInDbRepository implements IRepository<Product> {
       })
       .getMany()
       .catch((error) => {
-        throw new Error(
-          `An error occurred while searching the product in the database: ${error.message}`,
+        throw new HttpException(
+          `An error occurred while searching the orderItem in the database: ${error.message}`,
+          HttpStatus.INTERNAL_SERVER_ERROR,
         );
       });
   }
@@ -61,8 +63,9 @@ export class ProductInDbRepository implements IRepository<Product> {
       })
       .getOne()
       .catch((error) => {
-        throw new Error(
-          `An error occurred while searching the product in the database: ${error.message}`,
+        throw new HttpException(
+          `An error occurred while searching the orderItem in the database: ${error.message}`,
+          HttpStatus.INTERNAL_SERVER_ERROR,
         );
       });
   }
@@ -86,8 +89,9 @@ export class ProductInDbRepository implements IRepository<Product> {
         }));
       })
       .catch((error) => {
-        throw new Error(
-          `An error occurred while searching the orderItem in the database: '${JSON.stringify(productId)}': ${error.message}`,
+        throw new HttpException(
+          `An error occurred while searching the orderItem in the database: ${error.message}`,
+          HttpStatus.INTERNAL_SERVER_ERROR,
         );
       });
   }
@@ -97,8 +101,9 @@ export class ProductInDbRepository implements IRepository<Product> {
       .update(product.id, product)
       .then(() => product)
       .catch((error) => {
-        throw new Error(
+        throw new HttpException(
           `An error occurred while saving the product to the database: '${JSON.stringify(product)}': ${error.message}`,
+          HttpStatus.INTERNAL_SERVER_ERROR,
         );
       });
   }
@@ -107,8 +112,9 @@ export class ProductInDbRepository implements IRepository<Product> {
     const orderItemsFromProduct =
       await this.getOrderItemsByProductId(productId);
     if (orderItemsFromProduct?.length) {
-      throw Error(
+      throw new HttpException(
         `Can't delete this product because there are ${orderItemsFromProduct?.length} Order Items related to it.`,
+        HttpStatus.FORBIDDEN,
       );
     }
 
