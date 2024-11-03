@@ -1,15 +1,16 @@
 import { Product } from '../../../shared/models';
 import { IRepository } from '../../../infrastructure/repositories/iRepository';
+import { HttpException, HttpStatus } from '@nestjs/common';
 
 export class MockProductRepository implements IRepository<Product> {
   findById(): Promise<Product> {
-    throw new Error('Method not implemented.');
+    throw new HttpException('Method not implemented.', HttpStatus.FORBIDDEN);
   }
   edit(): Promise<Product> {
-    throw new Error('Method not implemented.');
+    throw new HttpException('Method not implemented.', HttpStatus.FORBIDDEN);
   }
   delete(): Promise<void> {
-    throw new Error('Method not implemented.');
+    throw new HttpException('Method not implemented.', HttpStatus.FORBIDDEN);
   }
   private readonly products: Product[] = [];
 
@@ -35,7 +36,7 @@ export class MockProductRepository implements IRepository<Product> {
       (product) => product.id === productDto.id,
     );
     if (productIndex === -1) {
-      throw new Error('Product not found');
+      throw new HttpException('Product not found.', HttpStatus.NOT_FOUND);
     }
 
     const updatedProduct = { ...this.products[productIndex], ...productDto };
@@ -48,7 +49,7 @@ export class MockProductRepository implements IRepository<Product> {
       (product) => product.id === id,
     );
     if (productIndex === -1) {
-      throw new Error('Product not found');
+      throw new HttpException('Product not found.', HttpStatus.NOT_FOUND);
     }
 
     this.products.splice(productIndex, 1);

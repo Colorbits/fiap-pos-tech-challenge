@@ -1,12 +1,13 @@
+import { HttpException, HttpStatus } from '@nestjs/common';
 import { Category, CategoryDto } from '../../../shared/models';
 import { IRepository } from '../iRepository';
 
 export class MockCategoryRepository implements IRepository<Category> {
   find(): Promise<Category[]> {
-    throw new Error('Method not implemented.');
+    throw new HttpException('Method not implemented.', HttpStatus.FORBIDDEN);
   }
   findById(): Promise<Category> {
-    throw new Error('Method not implemented.');
+    throw new HttpException('Method not implemented.', HttpStatus.FORBIDDEN);
   }
   private readonly categorys: Category[] = [];
 
@@ -25,7 +26,7 @@ export class MockCategoryRepository implements IRepository<Category> {
       (category) => category.id === categoryDto.id,
     );
     if (categoryIndex === -1) {
-      throw new Error('Category not found');
+      throw new HttpException('Category not found.', HttpStatus.NOT_FOUND);
     }
 
     const updatedCategory = {
@@ -41,7 +42,7 @@ export class MockCategoryRepository implements IRepository<Category> {
       (category) => category.id === id,
     );
     if (categoryIndex === -1) {
-      throw new Error('Category not found');
+      throw new HttpException('Category not found.', HttpStatus.NOT_FOUND);
     }
 
     this.categorys.splice(categoryIndex, 1);

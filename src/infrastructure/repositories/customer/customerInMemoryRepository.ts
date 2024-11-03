@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { Customer } from '../../../shared/models';
 import { IRepository } from '../iRepository';
 
@@ -8,10 +8,10 @@ import { IRepository } from '../iRepository';
 @Injectable()
 export class CustomerInMemoryRepository implements IRepository<Customer> {
   find(): Promise<Customer[]> {
-    throw new Error('Method not implemented.');
+    throw new HttpException('Method not implemented.', HttpStatus.FORBIDDEN);
   }
   findById(): Promise<Customer> {
-    throw new Error('Method not implemented.');
+    throw new HttpException('Method not implemented.', HttpStatus.FORBIDDEN);
   }
   private readonly customers: Customer[] = [];
 
@@ -25,10 +25,10 @@ export class CustomerInMemoryRepository implements IRepository<Customer> {
   }
 
   delete(): Promise<void> {
-    throw new Error('Método não implementado.');
+    throw new HttpException('Method not implemented.', HttpStatus.FORBIDDEN);
   }
 
   edit(): Promise<Customer> {
-    throw new Error('Método não implementado.');
+    throw new HttpException('Method not implemented.', HttpStatus.FORBIDDEN);
   }
 }

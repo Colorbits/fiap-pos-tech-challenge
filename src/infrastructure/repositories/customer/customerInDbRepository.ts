@@ -1,5 +1,5 @@
 import { Repository } from 'typeorm';
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Customer, User } from '../../../shared/models';
 import { CustomerEntity } from './customerEntity';
@@ -43,8 +43,9 @@ export class CustomerInDbRepository implements IRepository<Customer | User> {
         };
       })
       .catch((error) => {
-        throw new Error(
+        throw new HttpException(
           `An error occurred while searching the customer in the database: ${error.message}`,
+          HttpStatus.INTERNAL_SERVER_ERROR,
         );
       });
   }
@@ -59,8 +60,9 @@ export class CustomerInDbRepository implements IRepository<Customer | User> {
         email: customer.email,
       })
       .catch((error) => {
-        throw new Error(
+        throw new HttpException(
           `An error occurred while saving the customer to the database: '${JSON.stringify(customer)}': ${error.message}`,
+          HttpStatus.INTERNAL_SERVER_ERROR,
         );
       });
   }
@@ -93,8 +95,9 @@ export class CustomerInDbRepository implements IRepository<Customer | User> {
         });
       })
       .catch((error) => {
-        throw new Error(
+        throw new HttpException(
           `An error occurred while searching the customer in the database: ${error.message}`,
+          HttpStatus.INTERNAL_SERVER_ERROR,
         );
       });
   }
@@ -130,17 +133,18 @@ export class CustomerInDbRepository implements IRepository<Customer | User> {
         });
       })
       .catch((error) => {
-        throw new Error(
+        throw new HttpException(
           `An error occurred while searching the customer in the database: ${error.message}`,
+          HttpStatus.INTERNAL_SERVER_ERROR,
         );
       });
   }
 
   delete(): Promise<void> {
-    throw new Error('Method not implemented.');
+    throw new HttpException('Method not implemented.', HttpStatus.FORBIDDEN);
   }
 
   edit(): Promise<Customer> {
-    throw new Error('Method not implemented.');
+    throw new HttpException('Method not implemented.', HttpStatus.FORBIDDEN);
   }
 }

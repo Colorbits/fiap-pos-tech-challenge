@@ -1,9 +1,5 @@
-import { Injectable } from '@nestjs/common';
-import {
-  Category,
-  CategoryDto,
-  FilterCategoryDto,
-} from '../../../shared/models';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { Category, CategoryDto } from '../../../shared/models';
 import { IRepository } from '../iRepository';
 
 /**
@@ -12,10 +8,10 @@ import { IRepository } from '../iRepository';
 @Injectable()
 export class CategoryInMemory implements IRepository<Category> {
   find(): Promise<Category[]> {
-    throw new Error('Method not implemented.');
+    throw new HttpException('Method not implemented.', HttpStatus.FORBIDDEN);
   }
   findById(): Promise<Category> {
-    throw new Error('Method not implemented.');
+    throw new HttpException('Method not implemented.', HttpStatus.FORBIDDEN);
   }
   private readonly categories: Category[] = [];
 
@@ -34,7 +30,7 @@ export class CategoryInMemory implements IRepository<Category> {
       (category) => category.id === categoryDto.id,
     );
     if (categoryIndex === -1) {
-      throw new Error('Category not found');
+      throw new HttpException('Category not found.', HttpStatus.NOT_FOUND);
     }
 
     const updatedCategory = {
@@ -50,7 +46,7 @@ export class CategoryInMemory implements IRepository<Category> {
       (category) => category.id === id,
     );
     if (categoryIndex === -1) {
-      throw new Error('Category not found');
+      throw new HttpException('Category not found.', HttpStatus.NOT_FOUND);
     }
 
     this.categories.splice(categoryIndex, 1);

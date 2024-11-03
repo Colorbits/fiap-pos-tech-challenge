@@ -8,10 +8,15 @@ import {
   Param,
   Post,
   Put,
+  Query,
 } from '@nestjs/common';
 import { ApiQuery } from '@nestjs/swagger';
 import { OrderItemService } from '../../domain';
-import { OrderItem, OrderItemDto } from '../../shared/models';
+import {
+  FilterOrderItemDto,
+  OrderItem,
+  OrderItemDto,
+} from '../../shared/models';
 
 @Controller('order-item')
 export class OrderItemController {
@@ -22,18 +27,18 @@ export class OrderItemController {
   ) {}
 
   @Get()
-  findAll(): Promise<OrderItem[]> {
-    return this.orderItemService.findAll();
+  find(@Query() filterOrderItemDto?: FilterOrderItemDto): Promise<OrderItem[]> {
+    return this.orderItemService.find(filterOrderItemDto.orderId);
   }
 
+  @Get('/:id')
   @ApiQuery({
     name: 'id',
     type: Number,
     required: false,
   })
-  @Get(':orderId')
-  findByOrderId(@Param('orderId') orderId?: number): Promise<OrderItem[]> {
-    return this.orderItemService.findByOrderId(orderId);
+  findById(@Param('id') id: number): Promise<OrderItem> {
+    return this.orderItemService.findById(id);
   }
 
   @Post()
@@ -48,12 +53,12 @@ export class OrderItemController {
     @Param('id') id: number,
     @Body() orderItemDto: OrderItemDto,
   ): Promise<OrderItem> {
-    const updatedOrderItem = await this.orderItemService.edit({
+    const editedOrderItem = await this.orderItemService.edit({
       ...orderItemDto,
       id,
     });
-    this.logger.debug(`Updated order: ${JSON.stringify(updatedOrderItem)}`);
-    return updatedOrderItem;
+    this.logger.debug({ editedOrderItem });
+    return editedOrderItem;
   }
 
   @Delete(':id')

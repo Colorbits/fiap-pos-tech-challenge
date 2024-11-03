@@ -1,5 +1,5 @@
 import { Repository } from 'typeorm';
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { OrderItemEntity } from './orderItemEntity';
 import { IRepository } from '../iRepository';
@@ -11,23 +11,35 @@ export class OrderItemInDbRepository implements IRepository<OrderItem> {
     @InjectRepository(OrderItemEntity)
     private repository: Repository<OrderItemEntity>,
   ) {}
-  findById(): Promise<OrderItem> {
-    throw new Error('Method not implemented.');
-  }
-
-  create(orderItem: OrderItem): Promise<OrderItem> {
+  findById(id: number): Promise<OrderItem> {
     return this.repository
-      .save(orderItem)
-      .then((orderItemEntity) => orderItemEntity)
+      .createQueryBuilder('orderItem')
+      .leftJoinAndSelect('orderItem.order', 'order')
+      .where('orderItem.id = :id', {
+        id: id,
+      })
+      .getOne()
       .catch((error) => {
-        throw new Error(
-          `An error occurred while saving the orderItem to the database: '${JSON.stringify(orderItem)}': ${error.message}`,
+        throw new HttpException(
+          `An error occurred while searching the order in the database: ${error.message}`,
+          HttpStatus.INTERNAL_SERVER_ERROR,
         );
       });
   }
 
+  create(orderItem: OrderItem): Promise<OrderItem> {
+    try {
+      return this.repository.save(orderItem);
+    } catch (error) {
+      new HttpException(
+        `An error occurred while saving the orderItem to the database: ${error.message}`,
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
+
   findAll(): Promise<OrderItem[]> {
-    throw new Error('Method not implemented.');
+    throw new HttpException('Method not implemented.', HttpStatus.FORBIDDEN);
   }
 
   find(orderId: number): Promise<OrderItem[]> {
@@ -49,17 +61,34 @@ export class OrderItemInDbRepository implements IRepository<OrderItem> {
         }));
       })
       .catch((error) => {
-        throw new Error(
-          `An error occurred while searching the orderItem in the database: '${JSON.stringify(orderId)}': ${error.message}`,
+        throw new HttpException(
+          `An error occurred while searching the orderItem in the database: ${error.message}`,
+          HttpStatus.INTERNAL_SERVER_ERROR,
         );
       });
   }
 
-  delete(id): Promise<void> {
-    throw new Error('Method not implemented.' + id);
+  async delete(id: number): Promise<void> {
+    try {
+      await this.repository.delete(id);
+    } catch (error) {
+      new HttpException(
+        `An error occurred while saving the orderItem to the database: ${error.message}`,
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
   }
 
-  edit(): Promise<OrderItem> {
-    throw new Error('Method not implemented.');
+  edit(orderItem: OrderItem): Promise<OrderItem> {
+    try {
+      return this.repository
+        .update(orderItem.id, orderItem)
+        .then(() => orderItem);
+    } catch (error) {
+      new HttpException(
+        `An error occurred while saving the orderItem to the database: ${error.message}`,
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
   }
 }
