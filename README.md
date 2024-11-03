@@ -122,13 +122,14 @@ A implementação deste sistema visa resolver problemas comuns em lanchonetes em
 
  - Lista de produtos: Tela no sistema onde a lanchonete pode visualizar os produtos cadastrados.
 
+
 ### Tech Stack
 
 - Node.js 20
-- Alpine 3.17.3
 - TypeScript 5.1.3
-- NestJS
+- NestJS 10
 - PostgreSQL 17
+- Alpine 3.20
 - Docker
 
 
@@ -144,11 +145,11 @@ Se você não possui o Docker instalado, siga as instruções para seu sistema o
 ```
 ENV=local
 PORT=3000
+URL=localhost
 POSTGRES_HOST=localhost
 POSTGRES_PORT=3306
 POSTGRES_USER=fiapuser
 POSTGRES_PASSWORD=123456
-POSTGRES_ROOT_PASSWORD=root
 POSTGRES_DATABASE=fiap-pos-tech-challenge
 ```
 
@@ -157,14 +158,33 @@ POSTGRES_DATABASE=fiap-pos-tech-challenge
 npm run start:docker
 ```
 
+## Comandos Docker
+
+    -   `npm run start:docker`: Inicializa a aplicação da API e um contêiner de banco de dados integrados.
+
+    -   `npm run stop:docker`: Desliga os contêineres da aplicação e banco de dados sem destruir os volumes associados aos contêineres, preservando os dados no banco.
+
+    -   `npm run purge:docker`: Desliga os contêineres e descarta os volumes associados, eliminando todos os dados gerados. Útil para reiniciar com um banco limpo.
+
+
+A composição de contêineres foi construída para garantir que o contêiner da API só inicie quando o banco de dados estiver pronto para receber conexões, assegurando a correta inicialização do ambiente.
 
 ## Execução via Postman
 
-Se você já fez um dos passos anteriores ([Instalação do projeto](#instalação-do-projeto) ou [Desenvolvimento](#desenvolvimento)), você pode importar a coleção em JSON do Postman com todos endpoints já configurados e realizar os testes diretamente na API.
-Se você não possui o Postman instalado, siga as instruções para seu sistema operacional na [documentação oficial Postman](https://learning.postman.com/docs/getting-started/installation/installation-and-updates/).
+Se você já completou um dos passos anteriores ([Instalação do projeto](#instala%C3%A7%C3%A3o-do-projeto) ou [Desenvolvimento](#desenvolvimento)), é possível importar uma coleção JSON do Postman com todos os endpoints já configurados para testar diretamente a API.
+
+Caso não tenha o Postman instalado, siga as instruções para o seu sistema operacional na [documentação oficial do Postman](https://learning.postman.com/docs/getting-started/installation/installation-and-updates/).
+
+A coleção do Postman está disponível [neste link](https://github.com/GabrielUmbelino/fiap-pos-tech-challenge/blob/main/docs/Fase%201/Postman/fiap-app.postman_collection.json). Você pode baixá-la e importar diretamente no seu Postman para realizar os testes necessários.
+
+Se precisar de orientação, a documentação oficial do Postman possui um [passo a passo de como importar dados](https://learning.postman.com/docs/getting-started/importing-and-exporting/importing-data/).
 
 ## Swagger 
 
-Todos os endpoints da api do projeto também podem ser consultados via Swagger.
+Todos os endpoints da API do projeto também podem ser consultados via Swagger.
 
+Se o projeto estiver sendo executado localmente, o Swagger estará disponível na URL:  
 [http://localhost:3000/api](http://localhost:3000/api)
+
+Além disso, você pode acessar o JSON de especificação OpenAPI, que estará disponível na URL:  
+[http://localhost:3000/api-json](http://localhost:3000/api-json)
