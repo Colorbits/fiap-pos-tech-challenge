@@ -141,7 +141,7 @@ Se você não possui o Docker instalado, siga as instruções para seu sistema o
 
 #### 2 - Adicione o seguinte conteudo ao arquivo criado
 
-`
+```
 ENV=local
 PORT=3000
 POSTGRES_HOST=localhost
@@ -150,10 +150,12 @@ POSTGRES_USER=fiapuser
 POSTGRES_PASSWORD=123456
 POSTGRES_ROOT_PASSWORD=root
 POSTGRES_DATABASE=fiap-pos-tech-challenge
-`
+```
 
 #### 3 - Inicialize o projeto executando o seguinte comando no temrinal
-`npm run start:docker`
+```
+npm run start:docker
+```
 
 
 ## Execução via Postman
