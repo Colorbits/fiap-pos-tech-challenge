@@ -57,32 +57,44 @@ A implementação deste sistema visa resolver problemas comuns em lanchonetes em
   - Gerenciamento das informações do sistema de pedidos.
 
 ### Diagramas
+
+##### Arquitetura Hexagonal
+
+![Arquitetura Hexagonal](https://github.com/GabrielUmbelino/fiap-pos-tech-challenge/blob/development/docs/Fase%201/arquitetura-hexagonal.png?raw=true)
+
 ##### Domain Storytelling
 
-![Diagrama 1 - Cadastro de cliente](https://raw.githubusercontent.com/GabrielUmbelino/fiap-pos-tech-challenge/refs/heads/main/docs/Fase%201/Domain%20Storytelling/01%20-%20Cadastro%20cliente_2024-09-14.png)
+![Diagrama 1 - Cadastro de cliente](https://github.com/GabrielUmbelino/fiap-pos-tech-challenge/blob/development/docs/Fase%201/Domain%20Storytelling/01%20-%20Cadastro%20cliente_2024-09-14.png?raw=true)
 
-![Diagrama 2 - Pedido](https://raw.githubusercontent.com/GabrielUmbelino/fiap-pos-tech-challenge/refs/heads/main/docs/Fase%201/Domain%20Storytelling/02%20-%20Pedido_2024-09-26.png)
+![Diagrama 2 - Pedido](https://github.com/GabrielUmbelino/fiap-pos-tech-challenge/blob/development/docs/Fase%201/Domain%20Storytelling/02%20-%20Pedido_2024-09-26.png?raw=true)
 
-![Diagrama 3 - Pagamento](https://raw.githubusercontent.com/GabrielUmbelino/fiap-pos-tech-challenge/refs/heads/main/docs/Fase%201/Domain%20Storytelling/03%20-%20Pagamento_2024-09-25.png)
+![Diagrama 3 - Pagamento](https://github.com/GabrielUmbelino/fiap-pos-tech-challenge/blob/development/docs/Fase%201/Domain%20Storytelling/03%20-%20Pagamento_2024-09-25.png?raw=true)
 
-![Diagrama 4 - Acompanhamento do Pedido](https://raw.githubusercontent.com/GabrielUmbelino/fiap-pos-tech-challenge/refs/heads/main/docs/Fase%201/Domain%20Storytelling/04%20-%20Acompanhamento%20de%20pedido_2024-09-25.png)
+![Diagrama 4 - Acompanhamento do Pedido](https://github.com/GabrielUmbelino/fiap-pos-tech-challenge/blob/development/docs/Fase%201/Domain%20Storytelling/04%20-%20Acompanhamento%20de%20pedido_2024-09-25.png?raw=true)
 
-![Diagrama 5 - Acompanhamento (cozinha)](https://raw.githubusercontent.com/GabrielUmbelino/fiap-pos-tech-challenge/refs/heads/main/docs/Fase%201/Domain%20Storytelling/05%20-%20Acompanhamento%20%28cozinha%29_2024-09-25.png)
+![Diagrama 5 - Acompanhamento (cozinha)](https://github.com/GabrielUmbelino/fiap-pos-tech-challenge/blob/development/docs/Fase%201/Domain%20Storytelling/05%20-%20Acompanhamento%20(cozinha)_2024-09-25.png?raw=true)
 
-![Diagrama 6 - Entrega](https://raw.githubusercontent.com/GabrielUmbelino/fiap-pos-tech-challenge/refs/heads/main/docs/Fase%201/Domain%20Storytelling/06%20-%20Entrega_2024-09-25.png)
+![Diagrama 6 - Entrega](https://github.com/GabrielUmbelino/fiap-pos-tech-challenge/blob/development/docs/Fase%201/Domain%20Storytelling/06%20-%20Entrega_2024-09-25.png?raw=true)
 
 
-![Diagrama 7 - Gerenciar produtos e categorias](https://raw.githubusercontent.com/GabrielUmbelino/fiap-pos-tech-challenge/refs/heads/main/docs/Fase%201/Domain%20Storytelling/07%20-%20Gerenciar%20produtos%20e%20categorias_2024-09-15.png)
+![Diagrama 7 - Gerenciar produtos e categorias](https://github.com/GabrielUmbelino/fiap-pos-tech-challenge/blob/development/docs/Fase%201/Domain%20Storytelling/07%20-%20Gerenciar%20produtos%20e%20categorias_2024-09-15.png?raw=true)
 
 
 ##### Event Storming (Miro)
-![Diagrama 1](https://raw.githubusercontent.com/GabrielUmbelino/fiap-pos-tech-challenge/refs/heads/main/docs/Fase%201/Event%20Storming/Event%20Storming%20P%C3%93S%20TECH%20FIAP%20%282%29.jpg)
+![Diagrama 1](https://github.com/GabrielUmbelino/fiap-pos-tech-challenge/blob/development/docs/Fase%201/Event%20Storming/Event%20Storming%20P%C3%93S%20TECH%20FIAP%20(2).jpg?raw=true)
+
 [Veja esse diagrama no Miro](https://miro.com/app/board/uXjVKiHE9p8=/?moveToViewport=-273,173,5636,1057&embedId=817689355251)
 
-![Diagrama 2](https://raw.githubusercontent.com/GabrielUmbelino/fiap-pos-tech-challenge/refs/heads/main/docs/Fase%201/Event%20Storming/Event%20Storming%20P%C3%93S%20TECH%20FIAP.jpg)
+
+
+![Diagrama 2](https://github.com/GabrielUmbelino/fiap-pos-tech-challenge/blob/development/docs/Fase%201/Event%20Storming/Event%20Storming%20P%C3%93S%20TECH%20FIAP.jpg?raw=true)
+
 [Veja esse diagrama no Miro](https://miro.com/app/live-embed/uXjVKiHE9p8=/?moveToViewport=-645,2257,5324,2449&embedId=118695308647)
 
-![Diagrama 3](https://raw.githubusercontent.com/GabrielUmbelino/fiap-pos-tech-challenge/refs/heads/main/docs/Fase%201/Event%20Storming/Event%20Storming%20P%C3%93S%20TECH%20FIAP%20%283%29.jpg)
+
+
+![Diagrama 3](https://github.com/GabrielUmbelino/fiap-pos-tech-challenge/blob/development/docs/Fase%201/Event%20Storming/Event%20Storming%20P%C3%93S%20TECH%20FIAP%20(3).jpg?raw=true)
+
 [Veja esse diagrama no Miro](https://miro.com/app/live-embed/uXjVKiHE9p8=/?moveToViewport=5518,2442,1255,1365&embedId=549875798417)
 
 
@@ -119,27 +131,22 @@ A implementação deste sistema visa resolver problemas comuns em lanchonetes em
 - PostgreSQL 17
 - Docker
 
-### Estrutura do projeto
-
-> TODO: Adicionar a estrutura do projeto (basicamente, a última coisa que irei adicionar, ele é baseado nas pastas e arquivos do projeto)
 
 ## Instalação do projeto
 
 Este projeto deve ser executado em um ambiente Docker, dispensando qualquer instalação adicional.
 Se você não possui o Docker instalado, siga as instruções para seu sistema operacional na [documentação oficial do Docker](https://docs.docker.com/get-docker).
 
-> TODO: Adicionar instruções Docker (WIP)
+`npm run start:docker`
 
-
-## Desenvolvimento
-
-Deseja abrir o código na IDE? Segue o fio.
-
-> TODO: Adicionar instruções de execução/desenvolvimento (WIP)
 
 ## Execução via Postman
 
 Se você já fez um dos passos anteriores ([Instalação do projeto](#instalação-do-projeto) ou [Desenvolvimento](#desenvolvimento)), você pode importar a coleção em JSON do Postman com todos endpoints já configurados e realizar os testes diretamente na API.
 Se você não possui o Postman instalado, siga as instruções para seu sistema operacional na [documentação oficial Postman](https://learning.postman.com/docs/getting-started/installation/installation-and-updates/).
 
-> TODO: Adicionar coleção Postman e adicionar o link a esta seção. (WIP, disponibilizar o JSON da OpenAPI/Swagger, que já é uma documentação dos endpoints)
+## Swagger 
+
+Todos os endpoints da api do projeto também podem ser consultados via Swagger.
+
+[http://localhost:3000/api](http://localhost:3000/api)
