@@ -1,5 +1,5 @@
 import { Repository } from 'typeorm';
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { IRepository } from '../iRepository';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ProductImageEntity } from './productImageEntity';
@@ -15,17 +15,18 @@ export class ProductImageInDbRepository implements IRepository<ProductImage> {
     private productRepository: Repository<ProductEntity>,
   ) {}
   edit(): Promise<ProductImage> {
-    throw new Error('Method not implemented.');
+    throw new HttpException('Method not implemented.', HttpStatus.FORBIDDEN);
   }
 
   findAll(): Promise<ProductImage[]> {
-    throw new Error('Method not implemented.');
+    throw new HttpException('Method not implemented.', HttpStatus.FORBIDDEN);
   }
 
   async create(productImage: ProductImage): Promise<ProductImage> {
     return this.repository.save(productImage).catch((error) => {
-      throw new Error(
-        `An error occurred while saving the product to the database: '${JSON.stringify(productImage)}': ${error.message}`,
+      throw new HttpException(
+        `An error occurred while searching the orderItem in the database: ${error.message}`,
+        HttpStatus.INTERNAL_SERVER_ERROR,
       );
     });
   }
@@ -45,8 +46,9 @@ export class ProductImageInDbRepository implements IRepository<ProductImage> {
       })
       .getMany()
       .catch((error) => {
-        throw new Error(
-          `An error occurred while searching the product in the database: ${error.message}`,
+        throw new HttpException(
+          `An error occurred while searching the orderItem in the database: ${error.message}`,
+          HttpStatus.INTERNAL_SERVER_ERROR,
         );
       });
   }
@@ -59,8 +61,9 @@ export class ProductImageInDbRepository implements IRepository<ProductImage> {
       })
       .getOne()
       .catch((error) => {
-        throw new Error(
-          `An error occurred while searching the product in the database: ${error.message}`,
+        throw new HttpException(
+          `An error occurred while searching the orderItem in the database: ${error.message}`,
+          HttpStatus.INTERNAL_SERVER_ERROR,
         );
       });
   }

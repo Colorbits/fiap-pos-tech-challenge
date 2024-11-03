@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { Customer, CustomerDto } from '../../../shared/models/customer';
 import { IService } from '../../iService';
 import { User } from '../../../shared/models';
@@ -13,7 +13,7 @@ export class CustomerService implements IService<Customer | User> {
     private readonly userRepository: IRepository<User>,
   ) {}
   create(): Promise<Customer> {
-    throw new Error('Method not implemented.');
+    throw new HttpException('Method not implemented.', HttpStatus.FORBIDDEN);
   }
 
   async createUserAndCustomer(
@@ -40,14 +40,14 @@ export class CustomerService implements IService<Customer | User> {
   }
 
   find(): Promise<Customer[]> {
-    throw new Error('Method not implemented.');
+    throw new HttpException('Method not implemented.', HttpStatus.FORBIDDEN);
   }
 
   edit(): Promise<Customer> {
-    throw new Error('Method not implemented.');
+    throw new HttpException('Method not implemented.', HttpStatus.FORBIDDEN);
   }
 
   delete(): Promise<void> {
-    throw new Error('Method not implemented.');
+    throw new HttpException('Method not implemented.', HttpStatus.FORBIDDEN);
   }
 }

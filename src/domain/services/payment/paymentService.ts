@@ -1,4 +1,4 @@
-import { Inject, Logger } from '@nestjs/common';
+import { HttpException, HttpStatus, Inject, Logger } from '@nestjs/common';
 import { Order } from '../../../shared/models';
 import { IPaymentService } from './iPaymentService';
 import { PaymentDto } from '../../../shared/models/payment';
@@ -25,12 +25,12 @@ export class PaymentService implements IPaymentService {
     const orders = await this.orderRepository.find(paymentDto.orderId);
 
     if (!orders?.length) {
-      throw new Error(`Order Not Found`);
+      throw new HttpException('Order Not Found', HttpStatus.NOT_FOUND);
     }
 
     const [order] = orders;
     if (order.status === OrderStatusEnum.CANCELED) {
-      throw new Error(`Order has been cancelled.`);
+      throw new HttpException('Order has been cancelled', HttpStatus.FORBIDDEN);
     }
 
     if (
@@ -40,19 +40,22 @@ export class PaymentService implements IPaymentService {
         OrderStatusEnum.FINISHED,
       ].includes(order.status)
     ) {
-      throw new Error(`Order is paid already.`);
+      throw new HttpException('Order is paid already', HttpStatus.FORBIDDEN);
     }
 
     if (order.status !== OrderStatusEnum.CONFIRMED) {
-      throw new Error(`Order needs to be confirmed to be paid.`);
+      throw new HttpException(
+        'Order needs to be confirmed to be paid',
+        HttpStatus.FORBIDDEN,
+      );
     }
 
     if (paymentDto.paymentMethod === PaymentMethodEnum.CREDIT_CARD) {
-      throw new Error('Method not implemented.');
+      throw new HttpException('Method not implemented', HttpStatus.FORBIDDEN);
     }
 
     if (paymentDto.paymentMethod === PaymentMethodEnum.PIX) {
-      throw new Error('Method not implemented.');
+      throw new HttpException('Method not implemented', HttpStatus.FORBIDDEN);
     }
 
     if (paymentDto.paymentMethod === PaymentMethodEnum.QR_CODE) {
@@ -65,8 +68,9 @@ export class PaymentService implements IPaymentService {
         });
         return paymentResult;
       } catch (error) {
-        throw new Error(
+        throw new HttpException(
           `An error occurred while creating qr code and saving the order ${JSON.stringify(order)}: ${error.message}`,
+          HttpStatus.INTERNAL_SERVER_ERROR,
         );
       }
     }

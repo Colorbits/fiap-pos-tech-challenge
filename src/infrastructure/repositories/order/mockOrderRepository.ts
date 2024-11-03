@@ -1,12 +1,13 @@
+import { HttpException, HttpStatus } from '@nestjs/common';
 import { Order } from '../../../shared/models';
 import { IRepository } from '../iRepository';
 
 export class MockOrderRepository implements IRepository<Order> {
   find(): Promise<Order[]> {
-    throw new Error('Method not implemented.');
+    throw new HttpException('Method not implemented.', HttpStatus.FORBIDDEN);
   }
   findById(): Promise<Order> {
-    throw new Error('Method not implemented.');
+    throw new HttpException('Method not implemented.', HttpStatus.FORBIDDEN);
   }
   private readonly orders: Order[] = [];
 
@@ -24,7 +25,7 @@ export class MockOrderRepository implements IRepository<Order> {
       (order) => order.id === orderDto.id,
     );
     if (orderIndex === -1) {
-      throw new Error('Order not found');
+      throw new HttpException('Order not found.', HttpStatus.NOT_FOUND);
     }
 
     const updatedOrder = { ...this.orders[orderIndex], ...orderDto };
@@ -35,7 +36,7 @@ export class MockOrderRepository implements IRepository<Order> {
   async delete(id: number): Promise<void> {
     const orderIndex = this.orders.findIndex((order) => order.id === id);
     if (orderIndex === -1) {
-      throw new Error('Order not found');
+      throw new HttpException('Order not found.', HttpStatus.NOT_FOUND);
     }
 
     this.orders.splice(orderIndex, 1);

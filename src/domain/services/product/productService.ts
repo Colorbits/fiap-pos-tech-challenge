@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { IService } from '../../iService';
 import { Category, Product, ProductDto } from '../../../shared/models';
 import { IRepository } from '../../../infrastructure/repositories/iRepository';
@@ -13,7 +13,7 @@ export class ProductService implements IService<Product> {
   ) {}
 
   findAll(): Promise<Product[]> {
-    throw new Error('Method not implemented.');
+    throw new HttpException('Method not implemented.', HttpStatus.FORBIDDEN);
   }
 
   async create(productDto: ProductDto): Promise<Product> {

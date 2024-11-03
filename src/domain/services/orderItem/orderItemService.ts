@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import {
   OrderItemDto,
   OrderItem,
@@ -19,7 +19,7 @@ export class OrderItemService implements IService<OrderItem> {
     private readonly productRepository: IRepository<Product>,
   ) {}
   findById(): Promise<OrderItem> {
-    throw new Error('Method not implemented.');
+    throw new HttpException('Method not implemented.', HttpStatus.FORBIDDEN);
   }
 
   async create(orderItemDto: OrderItemDto): Promise<OrderItem> {
@@ -62,12 +62,12 @@ export class OrderItemService implements IService<OrderItem> {
   }
 
   find(): Promise<OrderItem[]> {
-    throw new Error('Method not implemented.');
+    throw new HttpException('Method not implemented.', HttpStatus.FORBIDDEN);
   }
 
-  edit(orderDto: OrderItemDto): Promise<OrderItem> {
+  edit(): Promise<OrderItem> {
     // TODO: update order price after updating item
-    throw new Error('Method not implemented.' + JSON.stringify(orderDto));
+    throw new HttpException('Method not implemented.', HttpStatus.FORBIDDEN);
   }
 
   delete(id: number): Promise<void> {

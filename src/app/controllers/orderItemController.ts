@@ -43,19 +43,6 @@ export class OrderItemController {
     return createdOrder;
   }
 
-  @Put(':id')
-  async put(
-    @Param('id') id: number,
-    @Body() orderItemDto: OrderItemDto,
-  ): Promise<OrderItem> {
-    const updatedOrderItem = await this.orderItemService.edit({
-      ...orderItemDto,
-      id,
-    });
-    this.logger.debug(`Updated order: ${JSON.stringify(updatedOrderItem)}`);
-    return updatedOrderItem;
-  }
-
   @Delete(':id')
   async delete(@Param('id') id: number): Promise<void> {
     await this.orderItemService.delete(id);
