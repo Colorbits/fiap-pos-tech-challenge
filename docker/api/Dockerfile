@@ -1,5 +1,5 @@
 # Imagem base. Estamos usando uma imagem baseada no alpine para otimizar o tamanho da imagem do container.
-FROM node:20-alpine
+FROM node:20-alpine3.20
 
 # Criando diretório base da aplicação.
 WORKDIR /usr/src/app

@@ -40,7 +40,7 @@ services:
       timeout: 10s
       retries: 10
   db:
-    image: postgres
+    image: postgres:17-alpine3.20
     restart: unless-stopped
     environment:
       POSTGRES_DB: "${POSTGRES_DATABASE}"
