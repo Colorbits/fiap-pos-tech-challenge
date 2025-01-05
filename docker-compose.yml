@@ -14,7 +14,7 @@ services:
       # para dentro do container.
       context: .
       # Arquivo de definição da imagem do container.
-      dockerfile: docker/api/Dockerfile
+      dockerfile: Dockerfile
     ports:
       # Expondo aplicação na porta especificada na variável de ambiente PORT.
       - "${PORT}:${PORT}"
