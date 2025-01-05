@@ -3,7 +3,7 @@ kind: ConfigMap
 metadata:
   name: api-restaurante-configmap
 data:
-  PORT: "3000"
+  PORT: "80"
   ENV: local
   POSTGRES_HOST: svc-db-restaurante
   POSTGRES_PORT: "5432"
