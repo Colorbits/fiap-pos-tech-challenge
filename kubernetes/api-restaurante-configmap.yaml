@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: api-restaurante-configmap
+data:
+  HOST_DB: svc-db-restaurante:3306
+  USER_DB: fiapuser
+  PASS_DB: E@!9i!4MtXbx9H
+  DATABASE_DB: fiap-pos-tech-challenge

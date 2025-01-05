@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-restaurante-deployment
+spec:
+  template:
+    metadata:
+      name: api-restaurante
+      labels:
+        app: api-restaurante
+    spec:
+      containers:
+        - name: api-restaurante-container
+          image: gabrielumbelino/restaurante-api:1.0
+          ports:
+            - containerPort: 3000
+          envFrom:
+            - configMapRef:
+                name: api-restaurante-configmap
+  replicas: 1
+  selector:
+    matchLabels:
+      app: api-restaurante
