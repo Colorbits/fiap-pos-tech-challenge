@@ -17,6 +17,23 @@ spec:
           envFrom:
             - configMapRef:
                 name: api-restaurante-configmap
+          livenessProbe:
+            httpGet:
+              path: /api
+              port: 3000
+            periodSeconds: 10
+            failureThreshold: 3
+            initialDelaySeconds: 20
+          readinessProbe:
+            httpGet:
+              path: /api
+              port: 3000
+            periodSeconds: 10
+            failureThreshold: 5
+            initialDelaySeconds: 3
+          resources:
+            requests:
+              cpu: 100m
   replicas: 1
   selector:
     matchLabels:

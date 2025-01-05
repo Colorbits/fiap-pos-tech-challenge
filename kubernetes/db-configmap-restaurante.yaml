@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: db-configmap-restaurante
+data:
+  POSTGRES_DB: fiap-pos-tech-challenge
+  POSTGRES_USER: fiapuser
+  POSTGRES_PASSWORD: E@!9i!4MtXbx9H

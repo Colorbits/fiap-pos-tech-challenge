@@ -3,7 +3,10 @@ kind: ConfigMap
 metadata:
   name: api-restaurante-configmap
 data:
-  HOST_DB: svc-db-restaurante:3306
-  USER_DB: fiapuser
-  PASS_DB: E@!9i!4MtXbx9H
-  DATABASE_DB: fiap-pos-tech-challenge
+  PORT: "3000"
+  ENV: local
+  POSTGRES_HOST: svc-db-restaurante
+  POSTGRES_PORT: "5432"
+  POSTGRES_USER: fiapuser
+  POSTGRES_PASSWORD: E@!9i!4MtXbx9H
+  POSTGRES_DATABASE: fiap-pos-tech-challenge
