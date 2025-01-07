@@ -8,3 +8,8 @@ export class PaymentDto {
   @IsNotEmpty()
   paymentMethod: PaymentMethodEnum;
 }
+
+export class PaymentDataDto {
+  @IsNotEmpty()
+  paymentStatus: string;
+}
