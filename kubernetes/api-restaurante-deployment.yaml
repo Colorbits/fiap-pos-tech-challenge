@@ -13,10 +13,27 @@ spec:
         - name: api-restaurante-container
           image: gabrielumbelino/restaurante-api:1.0
           ports:
-            - containerPort: 3000
+            - containerPort: 80
           envFrom:
             - configMapRef:
                 name: api-restaurante-configmap
+          livenessProbe:
+            httpGet:
+              path: /api
+              port: 80
+            periodSeconds: 10
+            failureThreshold: 3
+            initialDelaySeconds: 20
+          readinessProbe:
+            httpGet:
+              path: /api
+              port: 80
+            periodSeconds: 10
+            failureThreshold: 5
+            initialDelaySeconds: 3
+          resources:
+            requests:
+              cpu: 100m
   replicas: 1
   selector:
     matchLabels:
