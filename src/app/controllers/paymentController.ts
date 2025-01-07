@@ -1,4 +1,12 @@
-import { Body, Controller, Inject, Logger, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Inject,
+  Logger,
+  Param,
+  Post,
+} from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { PaymentDto } from '../../shared/models/payment';
 import { IPaymentService } from '../../domain';
@@ -33,5 +41,28 @@ export class PaymentController {
     const paymentUrl = await this.paymentService.payOrder(paymentDto);
     this.logger.debug({ paymentUrl });
     return paymentUrl;
+  }
+
+  @ApiOperation({
+    summary: 'Status de pagamento do pedido.',
+    description: 'Consultar status de pagamento de um pedido.',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Status do pedido',
+    schema: {
+      type: 'string',
+      example: 'https://gateway.pagamento.com/pay/12345',
+    },
+  })
+  @ApiResponse({
+    status: 400,
+    description: 'Dados inválidos para o pagamento.',
+  })
+  @Get('/status/:orderId')
+  async paymentStatus(@Param('orderId') orderId?: number): Promise<string> {
+    const orderStatus = await this.paymentService.paymentStatus(orderId);
+    this.logger.debug({ orderStatus });
+    return orderStatus;
   }
 }

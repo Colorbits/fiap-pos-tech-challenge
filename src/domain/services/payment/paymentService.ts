@@ -74,4 +74,14 @@ export class PaymentService implements IPaymentService {
       }
     }
   }
+
+  async paymentStatus(orderId: Order['id']): Promise<string> {
+    const order = await this.orderRepository.findById(orderId);
+
+    if (!order) {
+      throw new HttpException('Order Not Found', HttpStatus.NOT_FOUND);
+    }
+
+    return order.status;
+  }
 }
