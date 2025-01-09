@@ -1,7 +1,7 @@
 import { HttpException, HttpStatus, Inject, Logger } from '@nestjs/common';
 import { Order } from '../../../shared/models';
 import { IPaymentService } from './iPaymentService';
-import { PaymentDto } from '../../../shared/models/payment';
+import { PaymentDataDto, PaymentDto } from '../../../shared/models/payment';
 import { OrderStatusEnum, PaymentMethodEnum } from '../../../shared';
 import { IRepository } from '../../../infrastructure/repositories/iRepository';
 
@@ -72,6 +72,43 @@ export class PaymentService implements IPaymentService {
           HttpStatus.INTERNAL_SERVER_ERROR,
         );
       }
+    }
+  }
+
+  async paymentStatus(orderId: Order['id']): Promise<string> {
+    const order = await this.orderRepository.findById(orderId);
+
+    if (!order) {
+      throw new HttpException('Order Not Found', HttpStatus.NOT_FOUND);
+    }
+
+    return order.status;
+  }
+
+  async paymentConfirmation(
+    orderId: Order['id'],
+    paymentDataDto: PaymentDataDto,
+  ): Promise<string> {
+    const order = await this.orderRepository.findById(orderId);
+
+    if (!order) {
+      throw new HttpException('Order Not Found', HttpStatus.NOT_FOUND);
+    }
+    try {
+      const status =
+        paymentDataDto.paymentStatus === 'approved'
+          ? OrderStatusEnum.PAYMENT_APPROVED
+          : OrderStatusEnum.PAYMENT_NOT_APPROVED;
+      const changedOrder = await this.orderRepository.edit({
+        ...order,
+        status,
+      });
+      return changedOrder.status;
+    } catch (error) {
+      throw new HttpException(
+        `An error occurred while creating qr code and saving the order ${JSON.stringify(order)}: ${error.message}`,
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
     }
   }
 }

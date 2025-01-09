@@ -28,31 +28,44 @@ export class OrderInDbRepository implements IRepository<Order> {
     }
   }
 
-  find(customerId: number, status: string): Promise<Order[]> {
-    let customerIdClause = '';
-    let statusClause = '';
+  async find(customerId: number, status: string): Promise<Order[]> {
+    let where = '';
 
     if (customerId) {
-      customerIdClause += 'order.userId = :customerId';
+      where += `and order.userId = ${customerId}`;
     }
 
     if (status) {
-      statusClause += 'order.status = :status';
+      where += `and order.status = ${status}`;
     }
-
-    return this.repository
-      .createQueryBuilder('order')
-      .where(customerIdClause, {
-        customerId,
-      })
-      .andWhere(statusClause, { status })
-      .getMany()
-      .catch((error) => {
-        throw new HttpException(
-          `An error occurred while searching the order in the database: ${error.message}`,
-          HttpStatus.INTERNAL_SERVER_ERROR,
-        );
-      });
+    try {
+      const orders = await this.repository.query(`
+        SELECT 
+          "o"."id",
+          "o"."status",
+          "o"."userId",
+          "o"."total_price" "totalPrice"
+        FROM 
+            "Order" "o"
+        WHERE
+          o.status != 'FINISHED'
+          ${where}
+        ORDER BY 
+            CASE 
+                WHEN "o"."status" = 'READY' THEN 1
+                WHEN "o"."status" = 'IN_PROGRESS' THEN 2
+                WHEN "o"."status" = 'FINISHED' THEN 3
+                ELSE 4 -- Other statuses (if any) will come last
+            END,
+          "o"."id" DESC;
+        `);
+      return orders;
+    } catch (error) {
+      throw new HttpException(
+        `An error occurred while searching the order in the database: ${error.message}`,
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
   }
 
   findAll(): Promise<Order[]> {
