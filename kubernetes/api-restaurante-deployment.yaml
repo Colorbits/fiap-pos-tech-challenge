@@ -17,6 +17,8 @@ spec:
           envFrom:
             - configMapRef:
                 name: api-restaurante-configmap
+            - secretRef:
+                name: db-secret
           livenessProbe:
             httpGet:
               path: /api

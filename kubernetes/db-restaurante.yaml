@@ -13,3 +13,5 @@ spec:
       envFrom:
         - configMapRef:
             name: db-configmap-restaurante
+        - secretRef:
+            name: db-secret
