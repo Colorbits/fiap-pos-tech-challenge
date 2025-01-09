@@ -134,8 +134,8 @@ A implementação deste sistema visa resolver problemas comuns em lanchonetes em
 
 
 ## Instalação do projeto
-
-Este projeto deve ser executado em um ambiente Docker, dispensando qualquer instalação adicional.
+### DOCKER
+Este projeto pode ser executado em um ambiente Docker, dispensando qualquer instalação adicional.
 Se você não possui o Docker instalado, siga as instruções para seu sistema operacional na [documentação oficial do Docker](https://docs.docker.com/get-docker).
 
 #### 1 - Crie um arquivo .env.local em na pasta /envs localizada na raiz do projeto
@@ -153,21 +153,44 @@ POSTGRES_PASSWORD=123456
 POSTGRES_DATABASE=fiap-pos-tech-challenge
 ```
 
-#### 3 - Inicialize o projeto executando o seguinte comando no temrinal
+#### 3 - Inicialize o projeto executando o seguinte comando no terminal
 ```
 npm run start:docker
 ```
 
 ## Comandos Docker
 
-    -   `npm run start:docker`: Inicializa a aplicação da API e um contêiner de banco de dados integrados.
+-   `npm run start:docker`: Inicializa a aplicação da API e um contêiner de banco de dados integrados.
 
-    -   `npm run stop:docker`: Desliga os contêineres da aplicação e banco de dados sem destruir os volumes associados aos contêineres, preservando os dados no banco.
+-   `npm run stop:docker`: Desliga os contêineres da aplicação e banco de dados sem destruir os volumes associados aos contêineres, preservando os dados no banco.
 
-    -   `npm run purge:docker`: Desliga os contêineres e descarta os volumes associados, eliminando todos os dados gerados. Útil para reiniciar com um banco limpo.
+-   `npm run purge:docker`: Desliga os contêineres e descarta os volumes associados, eliminando todos os dados gerados. Útil para reiniciar com um banco limpo.
 
 
 A composição de contêineres foi construída para garantir que o contêiner da API só inicie quando o banco de dados estiver pronto para receber conexões, assegurando a correta inicialização do ambiente.
+
+
+### Kubernetes
+Este projeto pode ser executado em um ambiente kubernetes, dispensando qualquer instalação adicional.
+Se você não possui o Kubernetes instalado, siga as instruções para seu sistema operacional na [documentação oficial do Kubernetes](https://kubernetes.io/docs/tasks/tools/).
+
+#### 1 - Inicialize o projeto executando o seguinte comando no terminal
+```
+npm run start:kubernetes
+```
+
+
+### Node.js
+Este projeto pode ser executado utilizando node.js em sua maquina.
+Se você não possui o Node.js instalado, siga as instruções para seu sistema operacional na [documentação oficial do Node.js](https://nodejs.org/en/download).
+
+#### 1 - Inicialize o projeto executando o seguinte comando no terminal
+```
+npm install
+
+npm run start
+```
+
 
 ## Execução via Postman
 
