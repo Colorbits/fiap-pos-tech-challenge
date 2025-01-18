@@ -7,6 +7,3 @@ data:
   ENV: local
   POSTGRES_HOST: svc-db-restaurante
   POSTGRES_PORT: "5432"
-  # POSTGRES_USER: fiapuser
-  # POSTGRES_PASSWORD: E@!9i!4MtXbx9H
-  # POSTGRES_DATABASE: fiap-pos-tech-challenge
