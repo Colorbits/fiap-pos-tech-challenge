@@ -62,10 +62,11 @@ A implementação deste sistema visa resolver problemas comuns em lanchonetes em
 
 ![Arquitetura Hexagonal](https://github.com/GabrielUmbelino/fiap-pos-tech-challenge/blob/main/docs/Fase%201/arquitetura-hexagonal.png?raw=true)
 
+
 ##### Kubernetes
 
 ![Diagrama Kubernetes](https://github.com/GabrielUmbelino/fiap-pos-tech-challenge/blob/main/docs/Fase%202/kubernetes-diagram.jpg?raw=true)
-
+[Video Demonstrativo da Arquitetura](https://youtu.be/Jc-Y4U1lrHw)
 
 ##### Domain Storytelling
 
