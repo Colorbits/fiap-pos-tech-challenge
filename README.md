@@ -1,11 +1,11 @@
 
 # Documentação - Tech Challenge FIAP
-### Grupo 66 - 9SOAT
+### Grupo 83 - 9SOAT
 
- - Bruno Zanella
+ - Nathalia Chaves
  - Gabriel Ferreira Umbelino
- - Michael Dougras da Silva
- - Victor Zaniquelli
+
+
 
 ## Introdução
 Este projeto almeja atender as necessidades destacadas para a *Lanchonete Evans*, da qual, devido a seu crescimento, se viu na necessidade de um sistema sólido e coeso de pedidos que atenda suas necessidades. Este sistema de autoatendimento permitirá que os clientes façam seus pedidos de forma autônoma, utilizando dispositivos e interfaces intuitivas. Com isso, espera-se melhorar a precisão dos pedidos, reduzir o tempo de espera e aumentar a satisfação dos clientes.
@@ -184,7 +184,7 @@ Se você não possui o Kubernetes instalado, siga as instruções para seu siste
 ```
 npm run start:kubernetes
 ```
-
+Acesse o projeto em: [http://localhost:30000/api](http://localhost:30000/api)
 
 ### Node.js
 Este projeto pode ser executado utilizando node.js em sua maquina.
