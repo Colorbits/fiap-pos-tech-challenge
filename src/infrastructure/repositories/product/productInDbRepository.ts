@@ -2,10 +2,9 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { Product } from '../../../shared/models/product';
 import { IRepository } from '../iRepository';
 import { InjectRepository } from '@nestjs/typeorm';
-import { ProductEntity } from './productEntity';
+import { ProductEntity, OrderItemEntity } from '../../../enterprise';
 import { Repository } from 'typeorm';
 import { OrderItem } from '../../../shared';
-import { OrderItemEntity } from '../orderItem';
 
 @Injectable()
 export class ProductInDbRepository implements IRepository<Product> {

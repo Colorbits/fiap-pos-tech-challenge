@@ -2,13 +2,22 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { DatabaseConstants } from '../postgres/postgres.constants';
 import { PostgresConfg } from '../postgres/postgres.config';
-import { OrderInDbRepository, OrderEntity } from './order';
-import { ProductInDbRepository, ProductEntity } from './product';
-import { ProductImageEntity, ProductImageInDbRepository } from './productImage';
-import { CustomerInDbRepository, CustomerEntity } from './customer';
-import { CategoryInDbRepository, CategoryEntity } from './category';
-import { OrderItemInDbRepository, OrderItemEntity } from './orderItem';
-import { UserInDbRepository, UserEntity } from './user';
+import { OrderInDbRepository } from './order';
+import { ProductInDbRepository } from './product';
+import { ProductImageInDbRepository } from './productImage';
+import { CustomerInDbRepository } from './customer';
+import { CategoryInDbRepository } from './category';
+import { OrderItemInDbRepository } from './orderItem';
+import { UserInDbRepository } from './user';
+import {
+  OrderEntity,
+  ProductEntity,
+  ProductImageEntity,
+  CustomerEntity,
+  CategoryEntity,
+  OrderItemEntity,
+  UserEntity,
+} from '../../enterprise';
 
 @Module({
   imports: [
