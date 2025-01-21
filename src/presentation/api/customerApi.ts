@@ -10,7 +10,7 @@ import {
 import { ApiQuery, ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { Customer, CustomerDto } from '../../shared/models/customer';
 import { User } from '../../shared/models/user';
-import { CustomerService } from '../../application';
+import { CustomerService } from '../../application/customer';
 
 @ApiTags('Clientes')
 @Controller('customer')

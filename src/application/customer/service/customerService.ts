@@ -2,15 +2,20 @@ import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { Customer, CustomerDto } from '../../../shared/models/customer';
 import { IService } from '../../iService';
 import { User } from '../../../shared/models';
-import { IRepository } from '../../../infrastructure/repositories/iRepository';
-
+import {
+  CreateUserAndCustomerUsecase,
+  FindAllCustomerUsecase,
+  FindByIdCustomerUsecase,
+} from '../usecases';
 @Injectable()
 export class CustomerService implements IService<Customer | User> {
   constructor(
-    @Inject('IRepository<Customer>')
-    private readonly customerRepository: IRepository<Customer>,
-    @Inject('IRepository<User>')
-    private readonly userRepository: IRepository<User>,
+    @Inject('CreateUserAndCustomerUsecase')
+    private readonly createUserAndCustomerUsecase: CreateUserAndCustomerUsecase,
+    @Inject('FindAllCustomerUsecase')
+    private readonly findAllCustomerUsecase: FindAllCustomerUsecase,
+    @Inject('FindByIdCustomerUsecase')
+    private readonly findByIdCustomerUsecase: FindByIdCustomerUsecase,
   ) {}
   create(): Promise<Customer> {
     throw new HttpException('Method not implemented.', HttpStatus.FORBIDDEN);
@@ -19,24 +24,15 @@ export class CustomerService implements IService<Customer | User> {
   async createUserAndCustomer(
     customerDto: CustomerDto,
   ): Promise<Customer | User> {
-    const user = await this.userRepository.create({});
-    if (!customerDto?.document?.length) return user;
-
-    return this.customerRepository.create({
-      id: user.id,
-      name: customerDto.name,
-      document: customerDto.document,
-      phoneNumber: customerDto.phoneNumber,
-      email: customerDto.email,
-    });
+    return this.createUserAndCustomerUsecase.createUserAndCustomer(customerDto);
   }
 
   async findById(customerId: number): Promise<Customer | User> {
-    return this.customerRepository.findById(customerId);
+    return this.findByIdCustomerUsecase.findById(customerId);
   }
 
   findAll(): Promise<Array<Customer | User>> {
-    return this.customerRepository.findAll();
+    return this.findAllCustomerUsecase.findAll();
   }
 
   find(): Promise<Customer[]> {
