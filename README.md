@@ -58,9 +58,9 @@ A implementação deste sistema visa resolver problemas comuns em lanchonetes em
 
 ### Diagramas
 
-##### Arquitetura Hexagonal
+##### Arquitetura Clean
 
-![Arquitetura Hexagonal](https://github.com/GabrielUmbelino/fiap-pos-tech-challenge/blob/main/docs/Fase%201/arquitetura-hexagonal.png?raw=true)
+![Arquitetura Clean](https://github.com/GabrielUmbelino/fiap-pos-tech-challenge/blob/main/docs/Fase%202/clean-architecture.jpg?raw=true)
 
 
 ##### Kubernetes
