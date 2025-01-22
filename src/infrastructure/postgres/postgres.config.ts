@@ -3,13 +3,15 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { config as dotenvConfig } from 'dotenv';
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { DatabaseConstants } from './postgres.constants';
-import { CustomerEntity } from '../repositories/customer';
-import { ProductEntity } from '../repositories/product';
-import { CategoryEntity } from '../repositories/category';
-import { OrderEntity } from '../repositories/order';
-import { OrderItemEntity } from '../repositories/orderItem';
-import { UserEntity } from '../repositories/user';
-import { ProductImageEntity } from '../repositories/productImage';
+import {
+  OrderEntity,
+  ProductEntity,
+  ProductImageEntity,
+  CustomerEntity,
+  CategoryEntity,
+  OrderItemEntity,
+  UserEntity,
+} from '../../entities';
 
 dotenvConfig({ path: process.cwd() + '/envs/.env.local' });
 

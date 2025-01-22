@@ -1,10 +1,12 @@
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './main.module';
+import { MainModule } from './main.module';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+
 const port = process.env.PORT || 3000;
 const url = process.env.URL || 'localhost';
+
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(MainModule);
 
   const config = new DocumentBuilder()
     .setTitle('Fiap Pos Tech Challenge')
@@ -18,4 +20,5 @@ async function bootstrap() {
 
   await app.listen(port);
 }
+
 bootstrap();
