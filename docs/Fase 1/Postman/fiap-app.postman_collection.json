@@ -31,13 +31,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/customer/4",
+							"raw": "{{base_url}}/customer/1",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"customer",
-								"4"
+								"1"
 							]
 						},
 						"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
@@ -231,39 +231,6 @@
 					"response": []
 				},
 				{
-					"name": "delete category",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Status code is 200\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});"
-								],
-								"type": "text/javascript",
-								"packages": {}
-							}
-						}
-					],
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "{{base_url}}/category/5",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"category",
-								"5"
-							]
-						},
-						"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
-					},
-					"response": []
-				},
-				{
 					"name": "post category",
 					"event": [
 						{
@@ -285,7 +252,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"Bebidas\"\n}",
+							"raw": "{\n    \"name\": \"Lanches\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -335,16 +302,49 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url}}/category/6",
+							"raw": "{{base_url}}/category/3",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"category",
-								"6"
+								"3"
 							]
 						},
 						"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+					},
+					"response": []
+				},
+				{
+					"name": "delete category",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/category/3",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"category",
+								"3"
+							]
+						},
+						"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
 					},
 					"response": []
 				}
@@ -372,13 +372,13 @@
 									]
 								},
 								"url": {
-									"raw": "{{base_url}}/product/1/image",
+									"raw": "{{base_url}}/product/9/image",
 									"host": [
 										"{{base_url}}"
 									],
 									"path": [
 										"product",
-										"1",
+										"9",
 										"image"
 									]
 								}
@@ -391,15 +391,15 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{base_url}}/product/1/image/2",
+									"raw": "{{base_url}}/product/9/image/1",
 									"host": [
 										"{{base_url}}"
 									],
 									"path": [
 										"product",
-										"1",
+										"9",
 										"image",
-										"2"
+										"1"
 									]
 								}
 							},
@@ -429,7 +429,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"Big mac\",\n    \"price\": \"24.99\",\n    \"status\": \"AVAILABLE\",\n    \"description\": \"Hamburguer simples com queijo\",\n    \"categoryId\": 6\n}",
+							"raw": "{\n    \"name\": \"Big mac\",\n    \"price\": \"24.99\",\n    \"status\": \"AVAILABLE\",\n    \"description\": \"Hamburguer simples com queijo\",\n    \"categoryId\": 1\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -648,7 +648,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"productId\": 2,\n    \"quantity\": 5,\n    \"orderId\": 1\n}",
+									"raw": "{\n    \"productId\": 1,\n    \"quantity\": 2,\n    \"orderId\": 12\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -730,7 +730,7 @@
 									}
 								},
 								"url": {
-									"raw": "{{base_url}}/order-item?orderId=4",
+									"raw": "{{base_url}}/order-item?orderId=1",
 									"host": [
 										"{{base_url}}"
 									],
@@ -740,7 +740,7 @@
 									"query": [
 										{
 											"key": "orderId",
-											"value": "4"
+											"value": "1"
 										}
 									]
 								}
@@ -802,22 +802,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/order?customerId=2&status=NEW",
+							"raw": "{{base_url}}/order",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"order"
-							],
-							"query": [
-								{
-									"key": "customerId",
-									"value": "2"
-								},
-								{
-									"key": "status",
-									"value": "NEW"
-								}
 							]
 						}
 					},
@@ -829,13 +819,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/order/4",
+							"raw": "{{base_url}}/order/1",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"order",
-								"4"
+								"1"
 							]
 						}
 					},
@@ -848,7 +838,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"customerId\": 1\n}",
+							"raw": "{\n    \"customerId\": 2\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -873,14 +863,14 @@
 						"method": "PUT",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/order/confirm/1",
+							"raw": "{{base_url}}/order/confirm/4",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"order",
 								"confirm",
-								"1"
+								"4"
 							]
 						}
 					},
@@ -955,7 +945,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"orderId\": 1,\n    \"paymentMethod\": \"QR_CODE\"\n}",
+							"raw": "{\n    \"orderId\": 4,\n    \"paymentMethod\": \"QR_CODE\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -969,6 +959,53 @@
 							],
 							"path": [
 								"payment"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "pay confirm",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"paymentStatus\": \"approved\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/payment/confirm/4",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"payment",
+								"confirm",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "payment status",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/payment/status/3",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"payment",
+								"status",
+								"3"
 							]
 						}
 					},
