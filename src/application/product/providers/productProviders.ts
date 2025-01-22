@@ -14,7 +14,7 @@ export const ProductProviders: Provider[] = [
   { provide: 'IService<Product>', useClass: ProductService },
   {
     provide: 'CreateProductUsecase',
-    inject: ['IRepository<Product>'],
+    inject: ['IRepository<Product>', 'IRepository<Category>'],
     useFactory: (
       repository: IRepository<Product>,
       repositoryCategory: IRepository<Category>,
@@ -29,7 +29,7 @@ export const ProductProviders: Provider[] = [
   },
   {
     provide: 'EditProductUsecase',
-    inject: ['IRepository<Product>'],
+    inject: ['IRepository<Product>', 'IRepository<Category>'],
     useFactory: (
       repository: IRepository<Product>,
       repositoryCategory: IRepository<Category>,

@@ -7,6 +7,7 @@ import {
   FindAllCustomerUsecase,
   FindByIdCustomerUsecase,
 } from '../usecases';
+
 @Injectable()
 export class CustomerService implements IService<Customer | User> {
   constructor(

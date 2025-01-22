@@ -2,7 +2,7 @@ import { Repository } from 'typeorm';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Customer, User } from '../../../shared/models';
-import { CustomerEntity, UserEntity } from '../../../enterprise';
+import { CustomerEntity, UserEntity } from '../../../entities';
 import { IRepository } from '../iRepository';
 
 @Injectable()

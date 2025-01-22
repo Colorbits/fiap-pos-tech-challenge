@@ -11,7 +11,7 @@ import {
   CategoryEntity,
   OrderItemEntity,
   UserEntity,
-} from '../../enterprise';
+} from '../../entities';
 
 dotenvConfig({ path: process.cwd() + '/envs/.env.local' });
 

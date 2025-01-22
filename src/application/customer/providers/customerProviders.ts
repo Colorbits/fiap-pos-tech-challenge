@@ -12,7 +12,7 @@ export const CustomerProviders: Provider[] = [
   { provide: 'IService<Customer>', useClass: CustomerService },
   {
     provide: 'CreateUserAndCustomerUsecase',
-    inject: ['IRepository<Customer>'],
+    inject: ['IRepository<Customer>', 'IRepository<User>'],
     useFactory: (
       repository: IRepository<Customer>,
       repositoryUser: IRepository<User>,

@@ -2,7 +2,7 @@ import { Repository } from 'typeorm';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { IRepository } from '../iRepository';
 import { InjectRepository } from '@nestjs/typeorm';
-import { ProductEntity, ProductImageEntity } from '../../../enterprise';
+import { ProductEntity, ProductImageEntity } from '../../../entities';
 import { ProductImage } from '../../../shared/models/productImage';
 
 @Injectable()

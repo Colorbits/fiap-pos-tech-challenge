@@ -38,7 +38,7 @@ export const CategoryProviders: Provider[] = [
   },
   {
     provide: 'DeleteCategoryUseCase',
-    inject: ['IRepository<Category>'],
+    inject: ['IRepository<Category>', 'IRepository<Product>'],
     useFactory: (
       repository: IRepository<Category>,
       productRepository: IRepository<Product>,

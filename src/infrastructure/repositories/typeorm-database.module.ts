@@ -17,7 +17,7 @@ import {
   CategoryEntity,
   OrderItemEntity,
   UserEntity,
-} from '../../enterprise';
+} from '../../entities';
 
 @Module({
   imports: [
