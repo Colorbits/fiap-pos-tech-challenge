@@ -173,7 +173,6 @@ npm run start:docker
 
 -   `npm run purge:docker`: Desliga os contêineres e descarta os volumes associados, eliminando todos os dados gerados. Útil para reiniciar com um banco limpo.
 
-
 A composição de contêineres foi construída para garantir que o contêiner da API só inicie quando o banco de dados estiver pronto para receber conexões, assegurando a correta inicialização do ambiente.
 
 
