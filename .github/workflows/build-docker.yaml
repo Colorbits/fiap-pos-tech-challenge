@@ -2,7 +2,7 @@ name: Build and publish image to Docker Hub
 on:
   push:
       branches:
-        - master
+        - main
 jobs:
   publish_images:
     runs-on: ubuntu-latest
