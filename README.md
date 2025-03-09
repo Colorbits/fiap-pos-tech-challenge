@@ -198,8 +198,6 @@ npm install
 npm run start
 ```
 
-
-
 ## Execução via Postman
 
 Se você já completou um dos passos anteriores ([Instalação do projeto](#instala%C3%A7%C3%A3o-do-projeto) ou [Desenvolvimento](#desenvolvimento)), é possível importar uma coleção JSON do Postman com todos os endpoints já configurados para testar diretamente a API.
