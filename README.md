@@ -1,9 +1,10 @@
 
 # Documentação - Tech Challenge FIAP
-### Grupo 83 - 9SOAT
+### Grupo 33 - 9SOAT
 
  - Nathalia Chaves
  - Gabriel Ferreira Umbelino
+ - Juliane Midori
 
 
 
