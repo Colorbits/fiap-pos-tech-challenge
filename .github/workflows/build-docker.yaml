@@ -1,10 +1,8 @@
 name: Build and publish image to Docker Hub
 on:
-  [workflow_dispatch]
-# on:
-#   push:
-#       branches:
-#         - master
+  push:
+      branches:
+        - master
 jobs:
   publish_images:
     runs-on: ubuntu-latest
