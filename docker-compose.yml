@@ -1,7 +1,6 @@
 volumes:
   # Volume para armazenar arquivos do banco de dados.
   db_data:
-
 networks:
   # Rede interna entre os containers.
   internal:
@@ -30,6 +29,8 @@ services:
     networks:
       - internal
     depends_on:
+      redis:
+        condition: 
       # Espera até que o banco de dados esteja pronto para receber requisições para iniciar a aplicação.
       db:
         condition: service_healthy
@@ -62,3 +63,12 @@ services:
       interval: 10s
       timeout: 3s
       retries: 3
+  redis:
+    image: redis:6.0.7
+    container_name: redis
+    restart: unless-stopped
+    ports:
+      - 6379:6379
+    healthcheck:
+      test: [ "CMD", "redis-cli", "--raw", "incr", "ping" ]
+
