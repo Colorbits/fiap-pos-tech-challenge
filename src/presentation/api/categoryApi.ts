@@ -8,10 +8,12 @@ import {
   Param,
   Post,
   Put,
+  UseInterceptors,
 } from '@nestjs/common';
 import { ApiQuery, ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { IService } from '../../application/iService';
 import { Category, CategoryDto } from '../../shared/models';
+import { CacheInterceptor } from '@nestjs/cache-manager';
 
 @ApiTags('Categorias')
 @Controller('category')
@@ -20,7 +22,7 @@ export class CategoryApi {
 
   constructor(
     @Inject('IService<Category>') private categoryService: IService<Category>,
-  ) {}
+  ) { }
 
   @ApiOperation({
     summary: 'Obter todas as categorias',
@@ -61,6 +63,7 @@ export class CategoryApi {
   @ApiResponse({ status: 404, description: 'Categoria não encontrada.' })
   @ApiResponse({ status: 500, description: 'Erro ao buscar a categoria.' })
   @Get(':id')
+  @UseInterceptors(CacheInterceptor)
   find(@Param('id') id?: number): Promise<Category[]> {
     return this.categoryService.find(id);
   }

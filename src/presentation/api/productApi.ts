@@ -9,10 +9,12 @@ import {
   Post,
   Put,
   Query,
+  UseInterceptors,
 } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse, ApiParam } from '@nestjs/swagger';
 import { IService } from '../../application/iService';
 import { FilterProductDto, Product, ProductDto } from '../../shared/models';
+import { CacheInterceptor } from '@nestjs/cache-manager';
 
 @ApiTags('Produtos')
 @Controller('product')
@@ -56,6 +58,7 @@ export class ProductApi {
     status: 404,
     description: 'Produto não encontrado.',
   })
+  @UseInterceptors(CacheInterceptor)
   @Get(':id')
   findById(@Param('id') id?: number): Promise<Product> {
     return this.productService.findById(id);

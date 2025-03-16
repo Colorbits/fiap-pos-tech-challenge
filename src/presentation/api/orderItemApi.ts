@@ -9,6 +9,7 @@ import {
   Post,
   Put,
   Query,
+  UseInterceptors,
 } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse, ApiParam } from '@nestjs/swagger';
 import { OrderItemService } from '../../application';
@@ -17,6 +18,7 @@ import {
   OrderItem,
   OrderItemDto,
 } from '../../shared/models';
+import { CacheInterceptor } from '@nestjs/cache-manager';
 
 @ApiTags('Itens do Pedido')
 @Controller('order-item')
@@ -26,7 +28,7 @@ export class OrderItemApi {
   constructor(
     @Inject('IService<OrderItem>')
     private orderItemService: OrderItemService,
-  ) {}
+  ) { }
 
   @ApiOperation({
     summary: 'Listar itens do pedido com filtro opcional',
@@ -63,6 +65,7 @@ export class OrderItemApi {
     description: 'Item do pedido não encontrado.',
   })
   @Get('/:id')
+  @UseInterceptors(CacheInterceptor)
   findById(@Param('id') id: number): Promise<OrderItem> {
     return this.orderItemService.findById(id);
   }

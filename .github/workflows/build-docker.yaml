@@ -1,0 +1,17 @@
+name: Build and publish image to Docker Hub
+on:
+  push:
+      branches:
+        - main
+jobs:
+  publish_images:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+      - name: build image
+        run: docker build . -t gabrielumbelino/restaurante-api:latest
+      - name: login to docker hub
+        run:  docker login -u gabrielumbelino -p ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: push image
+        run: docker push gabrielumbelino/restaurante-api:latest
