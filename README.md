@@ -2,7 +2,6 @@
 # Documentação - Tech Challenge FIAP
 ### Grupo 33 - 9SOAT
 
- - Nathalia Chaves
  - Gabriel Ferreira Umbelino
  - Juliane Midori
 
@@ -57,7 +56,38 @@ A implementação deste sistema visa resolver problemas comuns em lanchonetes em
 - **Painel administrativo**:
   - Gerenciamento das informações do sistema de pedidos.
 
-### Diagramas
+## Melhoria de Performance do Banco de Dados com Cache Redis
+Para otimizar o desempenho da API do restaurante, foi implementado um mecanismo de caching utilizando Redis. Essa estratégia visa reduzir a carga no banco de dados relacional e melhorar a velocidade das consultas, especialmente para dados frequentemente acessados.
+
+### Arquitetura Anterior
+![DER](https://github.com/Fiap-Tech-Challenge-SOAT/fiap-pos-tech-challenge/blob/main/docs/Fase%203/redis-before.jpeg?raw=true)
+
+#### A estrutura inicial seguia uma abordagem tradicional de acesso ao banco de dados, onde as requisições fluíam da seguinte maneira:
+- O Controller recebe a requisição do cliente e a encaminha para o Service.
+- O Service processa a lógica de negócio e chama o Repository.
+- O Repository acessa diretamente o banco de dados para recuperar os dados solicitados.
+- Esse fluxo, embora funcional, pode gerar gargalos de desempenho à medida que o número de requisições aumenta, resultando em acessos constantes ao banco de dados e aumentando a latência.
+
+### Melhoria com Redis
+![DER](https://github.com/Fiap-Tech-Challenge-SOAT/fiap-pos-tech-challenge/blob/main/docs/Fase%203/redis-after.png?raw=true)
+
+### A nova abordagem introduziu o Redis como uma camada de cache intermediária entre o Repository e o banco de dados. O fluxo atualizado funciona da seguinte maneira:
+- O Repository verifica se os dados solicitados já estão armazenados no Redis.
+- Se os dados estiverem disponíveis no cache (hit), eles são retornados diretamente, reduzindo a necessidade de acessar o banco de dados.
+- Se os dados não estiverem no cache (miss), o Repository consulta o banco de dados, armazena a resposta no Redis e retorna os dados ao cliente.
+- Essa estratégia reduz significativamente o tempo de resposta para consultas repetidas e diminui a sobrecarga no banco de dados, permitindo que ele se concentre em operações mais críticas.
+
+### Benefícios da Implementação
+- ✅ Redução da latência: Como o Redis armazena os dados em memória, a recuperação das informações é muito mais rápida do que acessos repetidos ao banco relacional.
+- ✅ Menor carga no banco de dados: Evita consultas desnecessárias para informações que raramente mudam.
+- ✅ Escalabilidade: Suporta um alto volume de requisições sem comprometer o desempenho do banco de dados.
+- ✅ Melhoria na experiência do usuário: Consultas mais rápidas resultam em tempos de resposta reduzidos na API.
+
+### Conclusão
+A implementação do Redis como cache permitiu otimizar o desempenho da API do restaurante, melhorando a escalabilidade e a eficiência do acesso aos dados. Esse modelo híbrido garante um equilíbrio entre persistência e velocidade, trazendo uma experiência mais ágil para os usuários da aplicação.
+
+
+## Diagramas
 
 #### Diagrama de Entidade e Relacionamento
 ![DER](https://github.com/Fiap-Tech-Challenge-SOAT/fiap-pos-tech-challenge/blob/main/docs/Fase%203/fiap-pos-tech-challenge-DER.png?raw=true)
