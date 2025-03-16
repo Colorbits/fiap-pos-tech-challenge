@@ -6,11 +6,13 @@ import {
   Logger,
   Param,
   Post,
+  UseInterceptors,
 } from '@nestjs/common';
 import { ApiQuery, ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { Customer, CustomerDto } from '../../shared/models/customer';
 import { User } from '../../shared/models/user';
 import { CustomerService } from '../../application/customer';
+import { CacheInterceptor } from '@nestjs/cache-manager';
 
 @ApiTags('Clientes')
 @Controller('customer')
@@ -81,6 +83,7 @@ export class CustomerApi {
     description: 'Erro ao buscar o cliente.',
   })
   @Get(':id')
+  @UseInterceptors(CacheInterceptor)
   find(@Param('id') id: number): Promise<Customer | User> {
     return this.customerService.findById(id);
   }
