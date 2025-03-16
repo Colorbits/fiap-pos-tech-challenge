@@ -59,15 +59,58 @@ A implementação deste sistema visa resolver problemas comuns em lanchonetes em
 
 ### Diagramas
 
+#### Diagrama de Entidade e Relacionamento
+![DER](https://github.com/Fiap-Tech-Challenge-SOAT/fiap-pos-tech-challenge/blob/main/docs/Fase%203/fiap-pos-tech-challenge-DER.png?raw=true)
+
+O diagrama representa a modelagem do banco de dados para uma API de restaurante, estruturando as principais entidades e seus relacionamentos. Abaixo, detalhamos cada uma das tabelas e suas funções dentro do sistema.
+
+###### 1. User
+A tabela User contém os usuários do sistema, que podem ser administradores ou funcionários. Cada usuário possui um identificador único (id).
+
+###### 2. Customer
+A entidade Customer representa os clientes do restaurante. Cada cliente tem um id, nome (name), documento (document), número de telefone (phone_number) e e-mail (email).
+
+###### 3. Order
+A tabela Order armazena os pedidos realizados no restaurante. Ela possui um id, status (status), preço total (total_price) e uma referência ao usuário que registrou o pedido (userId).
+
+###### 4. OrderItem
+Cada pedido pode conter múltiplos itens, que são representados pela entidade OrderItem. Esta tabela possui um id e campos que indicam a quantidade (quantity), preço unitário do produto (product_price), além de referências ao productId (produto) e orderId (pedido ao qual pertence).
+
+###### 5. Product
+A entidade Product armazena os itens disponíveis no restaurante, com campos como id, name (nome do produto), price (preço), status (se está ativo ou não), description (descrição do produto) e um vínculo à categoria (categoryId).
+
+###### 6. Category
+A tabela Category organiza os produtos em categorias distintas. Contém um id e um campo name para o nome da categoria.
+
+###### 7. ProductImage
+Cada produto pode conter uma ou mais imagens, armazenadas na tabela ProductImage, que contém um id, o caminho da imagem (path) e um vínculo ao productId.
+
+##### Relacionamentos:
+- User e Order possuem um relacionamento 1:N, pois um usuário pode registrar vários pedidos.
+- Order e OrderItem têm uma relação 1:N, onde um pedido pode conter vários itens.
+- OrderItem e Product estão relacionados, pois cada item do pedido está associado a um produto específico.
+- Product e Category têm um relacionamento 1:N, pois um produto pertence a uma única categoria, mas uma categoria pode ter vários produtos.
+- Product e ProductImage possuem um relacionamento 1:N, pois um produto pode ter várias imagens.
+- Essa modelagem fornece uma estrutura sólida para a API, garantindo escalabilidade e organização eficiente dos dados do restaurante.
+
+
+
+
 ##### Arquitetura Clean
 
 ![Arquitetura Clean](https://github.com/GabrielUmbelino/fiap-pos-tech-challenge/blob/main/docs/Fase%202/clean-architecture.jpg?raw=true)
+
+
+
 
 
 ##### Kubernetes
 
 ![Diagrama Kubernetes](https://github.com/GabrielUmbelino/fiap-pos-tech-challenge/blob/main/docs/Fase%202/kubernetes-diagram.jpg?raw=true)
 [Video Demonstrativo da Arquitetura](https://youtu.be/Jc-Y4U1lrHw)
+
+
+
 
 ##### Domain Storytelling
 
