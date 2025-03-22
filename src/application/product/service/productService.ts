@@ -9,6 +9,8 @@ import {
   FindByIdProductUsecase,
   FindProductUsecase,
 } from '../useCases';
+import { CACHE_MANAGER } from '@nestjs/cache-manager';
+import { Cache } from 'cache-manager';
 
 @Injectable()
 export class ProductService implements IService<Product> {
@@ -23,7 +25,8 @@ export class ProductService implements IService<Product> {
     private readonly findByIdProductUsecase: FindByIdProductUsecase,
     @Inject('FindProductUsecase')
     private readonly findProductUsecase: FindProductUsecase,
-  ) {}
+    @Inject(CACHE_MANAGER) private cacheService: Cache,
+  ) { }
 
   findAll(): Promise<Product[]> {
     throw new HttpException('Method not implemented.', HttpStatus.FORBIDDEN);
@@ -37,8 +40,27 @@ export class ProductService implements IService<Product> {
     return this.editProductUsecase.edit(productDto);
   }
 
-  find(categoryId: number): Promise<Product[]> {
-    return this.findProductUsecase.find(categoryId);
+  async find(categoryId: number): Promise<Product[]> {
+    try {
+      if (categoryId) {
+        const cachedData = await this.cacheService.get<Product[]>(
+          categoryId.toString(),
+        );
+
+        console.error('Product from cache', cachedData);
+
+        if (cachedData) {
+          return cachedData;
+        }
+      }
+      const data = await this.findProductUsecase.find(categoryId);
+      if (categoryId) {
+        await this.cacheService.set(categoryId?.toString(), data);
+      }
+      return data;
+    } catch (error) {
+      console.error('Error while fetching data from cache', error);
+    }
   }
 
   findById(id: Product['id']): Promise<Product> {
