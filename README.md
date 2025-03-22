@@ -201,6 +201,8 @@ POSTGRES_PORT=3306
 POSTGRES_USER=fiapuser
 POSTGRES_PASSWORD=123456
 POSTGRES_DATABASE=fiap-pos-tech-challenge
+REDIS_HOST=localhost
+REDIS_PORT=6379
 ```
 
 #### 3 - Inicialize o projeto executando o seguinte comando no terminal

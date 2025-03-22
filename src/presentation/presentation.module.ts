@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { InfrastructureModule } from '../infrastructure/infrastructure.module';
 import {
   OrderApi,
+  HealthApi,
   ProductApi,
   PaymentApi,
   CategoryApi,
@@ -15,6 +16,7 @@ import { ApplicationModule } from '../application';
   imports: [InfrastructureModule, ApplicationModule],
   controllers: [
     OrderApi,
+    HealthApi,
     ProductApi,
     PaymentApi,
     CategoryApi,
