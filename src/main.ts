@@ -1,7 +1,8 @@
 import * as session from 'express-session';
-import { NestFactory } from '@nestjs/core';
+import { HttpAdapterHost, NestFactory } from '@nestjs/core';
 import { MainModule } from './main.module';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+import { AllExceptionsFilter } from './shared/adapters/AllExceptionsFilter';
 
 const port = process.env.PORT || 3000;
 const url = process.env.URL || 'localhost';
@@ -9,6 +10,9 @@ const url = process.env.URL || 'localhost';
 async function bootstrap() {
   const app = await NestFactory.create(MainModule);
   app.setGlobalPrefix('dev');
+
+  const http_adapter = app.get(HttpAdapterHost);
+  app.useGlobalFilters(new AllExceptionsFilter(http_adapter));
 
 
   const config = new DocumentBuilder()
