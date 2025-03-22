@@ -14,7 +14,6 @@ async function bootstrap() {
   const http_adapter = app.get(HttpAdapterHost);
   app.useGlobalFilters(new AllExceptionsFilter(http_adapter));
 
-
   const config = new DocumentBuilder()
     .setTitle('Fiap Pos Tech Challenge')
     .setDescription('Restaurante API')

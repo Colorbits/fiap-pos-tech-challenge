@@ -29,14 +29,14 @@ services:
     networks:
       - internal
     depends_on:
-      redis:
-        condition: 
       # Espera até que o banco de dados esteja pronto para receber requisições para iniciar a aplicação.
+      redis:
+        condition: service_healthy
       db:
         condition: service_healthy
     # Define health check simples que só testa se o endpoint padrão está respondendo requisições.
     healthcheck:
-      test: "curl -k -f http://localhost:${PORT}"
+      test: "curl -k -f http://localhost:${PORT}/dev/health"
       interval: 10s
       timeout: 10s
       retries: 10
@@ -48,6 +48,8 @@ services:
       POSTGRES_USER: "${POSTGRES_USER}"
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
       PGPORT: "${POSTGRES_PORT}"
+      REDIS_HOST: "${REDIS_HOST}"
+      REDIS_PORT: "${REDIS_PORT}"
     # Se você quer acessar o banco de dados por uma ferramenta externa, descomente as duas linhas seguintes para exportar o
     # postgres na porta 5432 do host (ou ajuste a porta que deseja mapear do host).
     ports:
