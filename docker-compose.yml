@@ -29,14 +29,14 @@ services:
     networks:
       - internal
     depends_on:
-      # Espera até que o banco de dados esteja pronto para receber requisições para iniciar a aplicação.
       redis:
         condition: service_healthy
+      # Espera até que o banco de dados esteja pronto para receber requisições para iniciar a aplicação.
       db:
         condition: service_healthy
     # Define health check simples que só testa se o endpoint padrão está respondendo requisições.
     healthcheck:
-      test: "curl -k -f http://localhost:${PORT}/dev/health"
+      test: "curl -k -f http://localhost:${PORT}"
       interval: 10s
       timeout: 10s
       retries: 10
@@ -66,11 +66,13 @@ services:
       timeout: 3s
       retries: 3
   redis:
+    networks:
+      - internal
     image: redis:6.0.7
     container_name: redis
     restart: unless-stopped
     ports:
-      - 6379:6379
+      - "${REDIS_PORT}:${REDIS_PORT}"
     healthcheck:
       test: [ "CMD", "redis-cli", "--raw", "incr", "ping" ]
 
