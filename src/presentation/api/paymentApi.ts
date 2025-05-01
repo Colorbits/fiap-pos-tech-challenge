@@ -8,7 +8,7 @@ import {
   Post,
 } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
-import { PaymentDataDto, PaymentDto } from '../../shared/models/payment';
+import { PaymentDto } from '../../shared/models/payment';
 import { IPaymentService } from '../../application';
 
 @ApiTags('Pagamentos')
@@ -38,9 +38,7 @@ export class PaymentApi {
   })
   @Post()
   async pay(@Body() paymentDto: PaymentDto): Promise<string> {
-    const paymentUrl = await this.paymentService.payOrder(paymentDto);
-    this.logger.debug({ paymentUrl });
-    return paymentUrl;
+    return this.paymentService.payOrder(paymentDto);
   }
 
   @ApiOperation({
@@ -56,38 +54,7 @@ export class PaymentApi {
     description: 'Dados inválidos para o pagamento.',
   })
   @Get('/status/:orderId')
-  async paymentStatus(@Param('orderId') orderId?: number): Promise<string> {
-    const orderStatus = await this.paymentService.paymentStatus(orderId);
-    this.logger.debug({ orderStatus });
-    return orderStatus;
-  }
-
-  @ApiOperation({
-    summary: 'Confirma pagamento do pedido.',
-    description:
-      'Altera status de um pedido para pagamento aprovado ou pagamento nao aprovado.',
-  })
-  @ApiResponse({
-    status: 200,
-    description: 'Status do pedido',
-    schema: {
-      type: 'string',
-      example: 'approved',
-    },
-  })
-  @ApiResponse({
-    status: 400,
-    description: 'Pedido não encontrado.',
-  })
-  @Post('/confirm/:orderId')
-  async paymentConfirmation(
-    @Param('orderId') orderId: number,
-    @Body() paymentDataDto: PaymentDataDto,
-  ): Promise<void> {
-    const orderStatus = await this.paymentService.paymentConfirmation(
-      orderId,
-      paymentDataDto,
-    );
-    this.logger.debug({ orderStatus });
+  async getPayment(@Param('orderId') orderId?: number) {
+    return this.paymentService.getPayment(orderId);
   }
 }

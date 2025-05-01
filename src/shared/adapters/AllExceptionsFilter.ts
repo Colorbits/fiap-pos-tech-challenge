@@ -13,23 +13,27 @@ export class AllExceptionsFilter implements ExceptionFilter {
 
   catch(exception: unknown, host: ArgumentsHost): void {
     const ctx = host.switchToHttp();
-
+    const isException = exception instanceof HttpException;
     // check the httpStatus code and add custom logic if you want
-    const httpStatus =
-      exception instanceof HttpException
-        ? exception.getStatus()
-        : HttpStatus.INTERNAL_SERVER_ERROR;
+
+    const status = isException
+      ? exception.getStatus()
+      : HttpStatus.INTERNAL_SERVER_ERROR;
+
+    const message = isException
+      ? exception.getResponse()
+      : HttpStatus.INTERNAL_SERVER_ERROR;
 
     const responseBody = {
-      message: 'Custom Error from Nest',
-      status: httpStatus,
+      message,
+      status,
       host: ctx.getRequest().get('host'),
     };
 
     this.httpAdapterHost.httpAdapter.reply(
       ctx.getResponse(),
       responseBody,
-      httpStatus,
+      status,
     );
   }
 }
