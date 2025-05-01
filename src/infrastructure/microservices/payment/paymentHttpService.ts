@@ -13,7 +13,10 @@ export class PaymentHttpService implements IPaymentHttpService {
       );
       return response.data;
     } catch (error) {
-      console.error('Error processing payment:', error);
+      console.error(
+        `Error processing payment: ${paymentMicroserviceEndpoint}`,
+        error.message,
+      );
       throw error;
     }
   }
@@ -26,7 +29,10 @@ export class PaymentHttpService implements IPaymentHttpService {
       );
       return response.data;
     } catch (error) {
-      console.error('Error processing payment:', error);
+      console.error(
+        `Error processing payment: ${paymentMicroserviceEndpoint}`,
+        error.message,
+      );
       throw error;
     }
   }

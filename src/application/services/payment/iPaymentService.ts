@@ -1,7 +1,7 @@
 import { Order } from '../../../shared/models';
-import { PaymentDto } from '../../../shared/models/payment';
+import { PaymentDto, PaymentResponseDto } from '../../../shared/models/payment';
 
 export interface IPaymentService {
   payOrder(paymentDto: PaymentDto): Promise<string>;
-  paymentStatus(orderId: Order['id']): Promise<string>;
+  getPayment(orderId: Order['id']): Promise<PaymentResponseDto>;
 }

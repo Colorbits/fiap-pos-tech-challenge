@@ -1,7 +1,7 @@
 import { HttpException, HttpStatus, Inject, Logger } from '@nestjs/common';
 import { Order } from '../../../shared/models';
 import { IPaymentService } from './iPaymentService';
-import { Payment, PaymentDto } from '../../../shared/models/payment';
+import { PaymentDto } from '../../../shared/models/payment';
 import { OrderStatusEnum, PaymentStatusEnum } from '../../../shared';
 import { IRepository } from '../../../infrastructure/repositories/iRepository';
 import { IPaymentHttpService } from '../../../infrastructure/microservices/payment/IPaymentHttpService';
@@ -42,15 +42,29 @@ export class PaymentService implements IPaymentService {
     ) {
       throw new HttpException('Order is paid already', HttpStatus.FORBIDDEN);
     }
+    try {
+      const createPaymentDto: PaymentDto = {
+        ...paymentDto,
+        orderId: order.id,
+        paymentMethod: paymentDto.paymentMethod,
+        status: PaymentStatusEnum.WAITING_PAYMENT,
+      };
+      this.logger.log(`createPaymentDto ${JSON.stringify(createPaymentDto)}`);
 
-    const payment = new Payment(paymentDto);
-    const response = await this.PaymentHttpService.createPayment(payment);
-    this.logger.log(`Payment created response ${response}`);
+      const response =
+        await this.PaymentHttpService.createPayment(createPaymentDto);
+      this.logger.log(`Payment created response ${JSON.stringify(response)}`);
 
-    return response.paymentUrl;
+      return response.paymentUrl;
+    } catch (error) {
+      throw new HttpException(
+        `An error occurred while saving paying: '${JSON.stringify(paymentDto)}': ${error.message}`,
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
   }
 
-  async paymentStatus(orderId: Order['id']): Promise<string> {
+  async getPayment(orderId: Order['id']) {
     const order = await this.orderRepository.findById(orderId);
 
     if (!order) {
@@ -60,6 +74,6 @@ export class PaymentService implements IPaymentService {
     const response = await this.PaymentHttpService.getPayment(orderId);
     this.logger.log(`Payment status response ${response}`);
 
-    return response.status;
+    return response;
   }
 }

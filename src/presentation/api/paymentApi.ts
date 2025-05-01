@@ -8,7 +8,7 @@ import {
   Post,
 } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
-import { PaymentDataDto, PaymentDto } from '../../shared/models/payment';
+import { PaymentDto } from '../../shared/models/payment';
 import { IPaymentService } from '../../application';
 
 @ApiTags('Pagamentos')
@@ -38,9 +38,7 @@ export class PaymentApi {
   })
   @Post()
   async pay(@Body() paymentDto: PaymentDto): Promise<string> {
-    const paymentUrl = await this.paymentService.payOrder(paymentDto);
-    this.logger.debug({ paymentUrl });
-    return paymentUrl;
+    return this.paymentService.payOrder(paymentDto);
   }
 
   @ApiOperation({
@@ -56,9 +54,7 @@ export class PaymentApi {
     description: 'Dados inválidos para o pagamento.',
   })
   @Get('/status/:orderId')
-  async paymentStatus(@Param('orderId') orderId?: number): Promise<string> {
-    const orderStatus = await this.paymentService.paymentStatus(orderId);
-    this.logger.debug({ orderStatus });
-    return orderStatus;
+  async getPayment(@Param('orderId') orderId?: number) {
+    return this.paymentService.getPayment(orderId);
   }
 }
