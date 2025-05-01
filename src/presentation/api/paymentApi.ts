@@ -61,33 +61,4 @@ export class PaymentApi {
     this.logger.debug({ orderStatus });
     return orderStatus;
   }
-
-  @ApiOperation({
-    summary: 'Confirma pagamento do pedido.',
-    description:
-      'Altera status de um pedido para pagamento aprovado ou pagamento nao aprovado.',
-  })
-  @ApiResponse({
-    status: 200,
-    description: 'Status do pedido',
-    schema: {
-      type: 'string',
-      example: 'approved',
-    },
-  })
-  @ApiResponse({
-    status: 400,
-    description: 'Pedido não encontrado.',
-  })
-  @Post('/confirm/:orderId')
-  async paymentConfirmation(
-    @Param('orderId') orderId: number,
-    @Body() paymentDataDto: PaymentDataDto,
-  ): Promise<void> {
-    const orderStatus = await this.paymentService.paymentConfirmation(
-      orderId,
-      paymentDataDto,
-    );
-    this.logger.debug({ orderStatus });
-  }
 }
