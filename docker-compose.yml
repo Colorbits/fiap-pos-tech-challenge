@@ -1,7 +1,6 @@
 volumes:
   # Volume para armazenar arquivos do banco de dados.
   db_data:
-
 networks:
   # Rede interna entre os containers.
   internal:
@@ -30,6 +29,8 @@ services:
     networks:
       - internal
     depends_on:
+      redis:
+        condition: service_healthy
       # Espera até que o banco de dados esteja pronto para receber requisições para iniciar a aplicação.
       db:
         condition: service_healthy
@@ -47,6 +48,8 @@ services:
       POSTGRES_USER: "${POSTGRES_USER}"
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
       PGPORT: "${POSTGRES_PORT}"
+      REDIS_HOST: "${REDIS_HOST}"
+      REDIS_PORT: "${REDIS_PORT}"
     # Se você quer acessar o banco de dados por uma ferramenta externa, descomente as duas linhas seguintes para exportar o
     # postgres na porta 5432 do host (ou ajuste a porta que deseja mapear do host).
     ports:
@@ -62,3 +65,14 @@ services:
       interval: 10s
       timeout: 3s
       retries: 3
+  redis:
+    networks:
+      - internal
+    image: redis:6.0.7
+    container_name: redis
+    restart: unless-stopped
+    ports:
+      - "${REDIS_PORT}:${REDIS_PORT}"
+    healthcheck:
+      test: [ "CMD", "redis-cli", "--raw", "incr", "ping" ]
+

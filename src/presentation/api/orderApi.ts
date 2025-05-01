@@ -10,6 +10,7 @@ import {
   Post,
   Put,
   Query,
+  UseInterceptors,
 } from '@nestjs/common';
 import {
   ApiTags,
@@ -20,6 +21,7 @@ import {
 } from '@nestjs/swagger';
 import { IService } from '../../application/iService';
 import { FilterOrderDto, Order, OrderDto } from '../../shared/models';
+import { CacheInterceptor } from '@nestjs/cache-manager';
 
 @ApiTags('Pedidos')
 @Controller('order')
@@ -83,6 +85,7 @@ export class OrderApi {
     description: 'Pedido não encontrado.',
   })
   @Get('/:id')
+  @UseInterceptors(CacheInterceptor)
   findById(@Param('id') id?: number): Promise<Order> {
     return this.orderService.findById(id);
   }
