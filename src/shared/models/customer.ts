@@ -3,7 +3,7 @@ import { IsNotEmpty, IsOptional } from 'class-validator';
 
 export class CustomerDto {
   @IsOptional()
-  id?: number;
+  id?: string;
   @IsNotEmpty()
   name: string;
   @IsNotEmpty()
@@ -28,7 +28,7 @@ export class CustomerResponseDto {
 
 export class FilterCustomerDto {
   @IsOptional()
-  id?: number;
+  id?: string;
   @IsOptional()
   name?: string;
   @IsOptional()
@@ -40,14 +40,14 @@ export class FilterCustomerDto {
 }
 
 export class Customer {
-  id?: number;
+  id?: string;
   name: string;
   document: string;
   phoneNumber: string;
   email: string;
 
   constructor(customerDto: CustomerDto) {
-    this.id = customerDto?.id || randomInt(999);
+    this.id = customerDto?.id || `${randomInt(999)}`;
     this.name = customerDto.name;
     this.document = customerDto.document;
     this.phoneNumber = customerDto.phoneNumber;

@@ -24,7 +24,7 @@ export class CustomerService implements ICustomerService {
     return this.createUserAndCustomerUsecase.createUserAndCustomer(customerDto);
   }
 
-  async findById(customerId: number): Promise<CustomerResponseDto> {
+  async findById(customerId: string): Promise<CustomerResponseDto> {
     return this.findByIdCustomerUsecase.findById(customerId);
   }
 }

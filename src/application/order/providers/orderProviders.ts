@@ -1,6 +1,6 @@
 import { Provider } from '@nestjs/common';
 import { IRepository } from '../../../infrastructure/repositories/iRepository';
-import { Customer, Order } from '../../../shared';
+import { Order } from '../../../shared';
 import {
   CreateOrderUseCase,
   DeleteOrderUseCase,
@@ -9,6 +9,7 @@ import {
   FindOrderUseCase,
 } from '../useCases';
 import { OrderService } from '../service';
+import { ICustomerHttpService } from '../../../infrastructure/microservices/customer/iCustomerHttpService';
 
 export const OrderProviders: Provider[] = [
   { provide: 'IService<Order>', useClass: OrderService },
@@ -38,11 +39,11 @@ export const OrderProviders: Provider[] = [
   },
   {
     provide: 'CreateOrderUseCase',
-    inject: ['IRepository<Order>', 'IRepository<Customer>'],
+    inject: ['IRepository<Order>', 'ICustomerHttpService'],
     useFactory: (
       repository: IRepository<Order>,
-      customerRepository: IRepository<Customer>,
+      customerHttpService: ICustomerHttpService,
     ): CreateOrderUseCase =>
-      new CreateOrderUseCase(repository, customerRepository),
+      new CreateOrderUseCase(repository, customerHttpService),
   },
 ];

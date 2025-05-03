@@ -8,7 +8,7 @@ export class FindByIdCustomerUsecase {
     @Inject('ICustomerHttpService')
     private readonly customerHttpService: ICustomerHttpService,
   ) {}
-  async findById(customerId: number): Promise<CustomerResponseDto> {
+  async findById(customerId: string): Promise<CustomerResponseDto> {
     return this.customerHttpService.getCustomer(customerId);
   }
 }

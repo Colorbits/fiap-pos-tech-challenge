@@ -7,7 +7,7 @@ import { CustomerService } from '../service/customerService';
 import { ICustomerHttpService } from '../../../infrastructure/microservices/customer/iCustomerHttpService';
 
 export const CustomerProviders: Provider[] = [
-  { provide: 'IService<Customer>', useClass: CustomerService },
+  { provide: 'ICustomerService', useClass: CustomerService },
   {
     provide: 'CreateUserAndCustomerUsecase',
     inject: ['ICustomerHttpService'],

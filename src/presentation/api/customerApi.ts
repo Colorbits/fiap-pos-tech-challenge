@@ -19,7 +19,7 @@ export class CustomerApi {
   private readonly logger = new Logger(CustomerApi.name);
 
   constructor(
-    @Inject('IService<Customer>') private customerService: CustomerService,
+    @Inject('ICustomerService') private customerService: CustomerService,
   ) {}
   @ApiOperation({
     summary: 'Buscar cliente por ID ou outras informações',
@@ -64,7 +64,7 @@ export class CustomerApi {
   })
   @Get(':id')
   @UseInterceptors(CacheInterceptor)
-  find(@Param('id') id: number): Promise<CustomerResponseDto> {
+  find(@Param('id') id: string): Promise<CustomerResponseDto> {
     return this.customerService.findById(id);
   }
 

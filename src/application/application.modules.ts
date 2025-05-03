@@ -15,6 +15,7 @@ import { OrderProviders, OrderService } from './order';
     ...CustomerProviders,
     ...ProductProviders,
     ...OrderProviders,
+    { provide: 'ICustomerService', useClass: CustomerService },
     { provide: 'IService<ProductImage>', useClass: ProductImageService },
     { provide: 'IService<OrderItem>', useClass: OrderItemService },
     { provide: 'IPaymentService', useClass: PaymentService },

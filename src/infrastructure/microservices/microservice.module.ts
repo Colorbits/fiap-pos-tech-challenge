@@ -9,7 +9,7 @@ import { CustomerHttpService } from './customer/customerHttpService';
   ],
   exports: [
     { provide: 'IPaymentHttpService', useClass: PaymentHttpService },
-    { provide: 'ICustomerHttpService', useClass: CustomerHttpService },
+    { provide: 'ICustomerHttpService', useClass: CustomerHttpService }
   ],
 })
 export class MicroserviceModule {}
