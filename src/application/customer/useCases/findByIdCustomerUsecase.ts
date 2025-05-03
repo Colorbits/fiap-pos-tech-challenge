@@ -1,14 +1,14 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { Customer, User } from '../../../shared';
-import { IRepository } from '../../../infrastructure/repositories/iRepository';
+import { CustomerResponseDto } from '../../../shared';
+import { ICustomerHttpService } from '../../../infrastructure/microservices/customer/iCustomerHttpService';
 
 @Injectable()
 export class FindByIdCustomerUsecase {
   constructor(
-    @Inject('IRepository<Customer>')
-    private readonly customerRepository: IRepository<Customer>,
+    @Inject('ICustomerHttpService')
+    private readonly customerHttpService: ICustomerHttpService,
   ) {}
-  async findById(customerId: number): Promise<Customer | User> {
-    return this.customerRepository.findById(customerId);
+  async findById(customerId: number): Promise<CustomerResponseDto> {
+    return this.customerHttpService.getCustomer(customerId);
   }
 }

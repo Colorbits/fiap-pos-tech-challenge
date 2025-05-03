@@ -9,8 +9,7 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { ApiQuery, ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
-import { Customer, CustomerDto } from '../../shared/models/customer';
-import { User } from '../../shared/models/user';
+import { CustomerDto, CustomerResponseDto } from '../../shared/models/customer';
 import { CustomerService } from '../../application/customer';
 import { CacheInterceptor } from '@nestjs/cache-manager';
 
@@ -22,25 +21,6 @@ export class CustomerApi {
   constructor(
     @Inject('IService<Customer>') private customerService: CustomerService,
   ) {}
-
-  @ApiOperation({
-    summary: 'Obter todos os clientes',
-    description:
-      'Retorna uma lista de todos os clientes e usuários no sistema.',
-  })
-  @ApiResponse({
-    status: 200,
-    description: 'Lista de clientes retornada com sucesso.',
-  })
-  @ApiResponse({
-    status: 500,
-    description: 'Erro ao buscar clientes.',
-  })
-  @Get()
-  findAll(): Promise<Array<Customer | User>> {
-    return this.customerService.findAll();
-  }
-
   @ApiOperation({
     summary: 'Buscar cliente por ID ou outras informações',
     description:
@@ -84,7 +64,7 @@ export class CustomerApi {
   })
   @Get(':id')
   @UseInterceptors(CacheInterceptor)
-  find(@Param('id') id: number): Promise<Customer | User> {
+  find(@Param('id') id: number): Promise<CustomerResponseDto> {
     return this.customerService.findById(id);
   }
 
@@ -105,10 +85,10 @@ export class CustomerApi {
     description: 'Erro ao criar o cliente.',
   })
   @Post()
-  async create(@Body() customerDto: CustomerDto): Promise<Customer | User> {
+  async create(@Body() customerDto: CustomerDto): Promise<CustomerResponseDto> {
+    this.logger.debug(customerDto);
     const customer =
       await this.customerService.createUserAndCustomer(customerDto);
-    this.logger.debug(customerDto);
     this.logger.debug({ customer });
     return customer;
   }

@@ -13,6 +13,18 @@ export class CustomerDto {
   @IsOptional()
   email?: string;
 }
+export class CustomerResponseDto {
+  @IsOptional()
+  id: string;
+  @IsNotEmpty()
+  name?: string;
+  @IsNotEmpty()
+  document?: string;
+  @IsNotEmpty()
+  phoneNumber?: string;
+  @IsOptional()
+  email?: string;
+}
 
 export class FilterCustomerDto {
   @IsOptional()

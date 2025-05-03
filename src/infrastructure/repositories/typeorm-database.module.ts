@@ -5,7 +5,6 @@ import { PostgresConfg } from '../postgres/postgres.config';
 import { OrderInDbRepository } from './order';
 import { ProductInDbRepository } from './product';
 import { ProductImageInDbRepository } from './productImage';
-import { CustomerInDbRepository } from './customer';
 import { CategoryInDbRepository } from './category';
 import { OrderItemInDbRepository } from './orderItem';
 import { UserInDbRepository } from './user';
@@ -38,7 +37,6 @@ import {
     }),
   ],
   providers: [
-    { provide: 'IRepository<Customer>', useClass: CustomerInDbRepository },
     { provide: 'IRepository<Product>', useClass: ProductInDbRepository },
     {
       provide: 'IRepository<ProductImage>',
@@ -50,7 +48,6 @@ import {
     { provide: 'IRepository<User>', useClass: UserInDbRepository },
   ],
   exports: [
-    { provide: 'IRepository<Customer>', useClass: CustomerInDbRepository },
     { provide: 'IRepository<Product>', useClass: ProductInDbRepository },
     {
       provide: 'IRepository<ProductImage>',
