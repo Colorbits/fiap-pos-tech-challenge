@@ -1,6 +1,6 @@
 import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
-import { Order, OrderDto } from '../../../shared/models';
-import { IService } from '../../iService';
+import { Order, OrderDto, OrderResponseDto } from '../../../shared/models';
+
 import {
   CreateOrderUseCase,
   DeleteOrderUseCase,
@@ -8,9 +8,10 @@ import {
   FindByIdOrderUseCase,
   FindOrderUseCase,
 } from '../useCases';
+import { IOrderService } from './IOrderService';
 
 @Injectable()
-export class OrderService implements IService<Order> {
+export class OrderService implements IOrderService {
   constructor(
     @Inject('CreateOrderUseCase')
     private readonly createOrderUseCase: CreateOrderUseCase,
@@ -23,7 +24,7 @@ export class OrderService implements IService<Order> {
     @Inject('FindOrderUseCase')
     private readonly findOrderUseCase: FindOrderUseCase,
   ) {}
-  async create(orderDto: OrderDto): Promise<Order> {
+  async create(orderDto: OrderDto): Promise<OrderResponseDto> {
     return this.createOrderUseCase.create(orderDto);
   }
 
@@ -31,15 +32,15 @@ export class OrderService implements IService<Order> {
     throw new HttpException('Not implemented', HttpStatus.FORBIDDEN);
   }
 
-  find(orderId: number, status: string): Promise<Order[]> {
-    return this.findOrderUseCase.find(orderId, status);
+  find(userId: string, status: string): Promise<Order[]> {
+    return this.findOrderUseCase.find(userId, status);
   }
 
-  findById(orderId: number): Promise<Order> {
+  findById(orderId: number): Promise<OrderResponseDto> {
     return this.findByIdOrderUseCase.findById(orderId);
   }
 
-  async edit(orderDto: OrderDto): Promise<Order> {
+  async edit(orderDto: OrderDto): Promise<OrderResponseDto> {
     return this.editOrderUseCase.edit(orderDto);
   }
 

@@ -13,10 +13,7 @@ export class PaymentHttpService implements IPaymentHttpService {
       );
       return response.data;
     } catch (error) {
-      console.error(
-        `Error processing payment: ${paymentMicroserviceEndpoint}`,
-        error.message,
-      );
+      console.error(`Error processing payment`, error.message);
       throw error;
     }
   }
@@ -29,22 +26,22 @@ export class PaymentHttpService implements IPaymentHttpService {
       );
       return response.data;
     } catch (error) {
-      console.error(
-        `Error processing payment: ${paymentMicroserviceEndpoint}`,
-        error.message,
-      );
+      console.error(`Error processing payment`, error.message);
       throw error;
     }
   }
 
   async getPayment(orderId: Payment['orderId']) {
     try {
-      const response = await axios.get<PaymentResponseDto>(
+      const response = await axios.get<PaymentResponseDto[]>(
         `${paymentMicroserviceEndpoint}/${orderId}`,
+      );
+      console.log(
+        `Payment microservice response: ${JSON.stringify(response.data)}`,
       );
       return response.data;
     } catch (error) {
-      console.error('Error fetching payment status:', error);
+      console.error('Error fetching payment status:', error.message);
       throw error;
     }
   }

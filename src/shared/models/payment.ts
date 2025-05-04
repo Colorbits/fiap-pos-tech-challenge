@@ -10,6 +10,19 @@ export class PaymentDto {
   paymentMethod: PaymentMethodEnum;
   @IsNotEmpty()
   status: PaymentStatusEnum;
+  @IsOptional()
+  message?: string;
+}
+
+export class PaymentCallbackDto {
+  @IsNotEmpty()
+  paymentId: string;
+  @IsNotEmpty()
+  orderId: number;
+  @IsNotEmpty()
+  message: PaymentMethodEnum;
+  @IsNotEmpty()
+  status: string;
 }
 
 export class PaymentResponseDto {
@@ -35,11 +48,13 @@ export class Payment {
   orderId: number;
   paymentMethod: PaymentMethodEnum;
   status: PaymentStatusEnum;
+  message?: string;
 
   constructor(paymentDto: PaymentDto) {
     this.id = paymentDto?.id;
     this.orderId = paymentDto.orderId;
     this.paymentMethod = paymentDto.paymentMethod;
     this.status = paymentDto.status;
+    this.message = paymentDto.message;
   }
 }

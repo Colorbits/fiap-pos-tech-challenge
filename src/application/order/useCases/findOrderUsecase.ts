@@ -7,8 +7,8 @@ export class FindOrderUseCase {
   constructor(
     @Inject('IRepository<Order>')
     private readonly orderRepository: IRepository<Order>,
-  ) {}
-  find(orderId: number, status: string): Promise<Order[]> {
+  ) { }
+  find(orderId: number | string, status: string): Promise<Order[]> {
     return this.orderRepository.find(orderId, status);
   }
 }

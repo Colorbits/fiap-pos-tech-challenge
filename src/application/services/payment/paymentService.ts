@@ -1,7 +1,7 @@
 import { HttpException, HttpStatus, Inject, Logger } from '@nestjs/common';
 import { Order } from '../../../shared/models';
 import { IPaymentService } from './iPaymentService';
-import { PaymentDto } from '../../../shared/models/payment';
+import { PaymentCallbackDto, PaymentDto } from '../../../shared/models/payment';
 import { OrderStatusEnum, PaymentStatusEnum } from '../../../shared';
 import { IRepository } from '../../../infrastructure/repositories/iRepository';
 import { IPaymentHttpService } from '../../../infrastructure/microservices/payment/IPaymentHttpService';
@@ -72,7 +72,30 @@ export class PaymentService implements IPaymentService {
     }
 
     const response = await this.paymentHttpService.getPayment(orderId);
-    this.logger.log(`Payment status response ${response}`);
+
+    return response;
+  }
+
+  async paymentCallback(paymentDto: PaymentCallbackDto) {
+    const order = await this.orderRepository.findById(paymentDto.orderId);
+
+    if (!order) {
+      throw new HttpException('Order Not Found', HttpStatus.NOT_FOUND);
+    }
+
+    let status;
+    if (paymentDto.status === 'approved') {
+      status = PaymentStatusEnum.PAYMENT_APPROVED;
+    } else {
+      status = PaymentStatusEnum.PAYMENT_NOT_APPROVED;
+    }
+
+    const response = await this.paymentHttpService.updatePayment({
+      status,
+      id: paymentDto.paymentId,
+      orderId: paymentDto.orderId,
+      message: paymentDto.message,
+    });
 
     return response;
   }

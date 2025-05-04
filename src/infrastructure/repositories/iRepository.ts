@@ -1,7 +1,7 @@
 export interface IRepository<T> {
   create(type: T): Promise<T>;
 
-  find(id?: number, status?: string, term?: string): Promise<T[]>;
+  find(id?: number | string, status?: string, term?: string): Promise<T[]>;
 
   findById(id: number): Promise<T>;
 

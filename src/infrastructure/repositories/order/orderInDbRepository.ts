@@ -28,22 +28,22 @@ export class OrderInDbRepository implements IRepository<Order> {
     }
   }
 
-  async find(customerId: number, status: string): Promise<Order[]> {
+  async find(userId: number, status: string): Promise<Order[]> {
     let where = '';
 
-    if (customerId) {
-      where += `and order.userId = ${customerId}`;
+    if (userId) {
+      where += `and o.user_id = '${userId}'`;
     }
 
     if (status) {
-      where += `and order.status = ${status}`;
+      where += `and o.status = '${status}'`;
     }
     try {
       const orders = await this.repository.query(`
         SELECT 
           "o"."id",
           "o"."status",
-          "o"."userId",
+          "o"."user_id" "userId",
           "o"."total_price" "totalPrice"
         FROM 
             "Order" "o"

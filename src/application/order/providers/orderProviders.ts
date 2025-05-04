@@ -10,9 +10,10 @@ import {
 } from '../useCases';
 import { OrderService } from '../service';
 import { ICustomerHttpService } from '../../../infrastructure/microservices/customer/iCustomerHttpService';
+import { IPaymentHttpService } from '../../../infrastructure/microservices/payment/IPaymentHttpService';
 
 export const OrderProviders: Provider[] = [
-  { provide: 'IService<Order>', useClass: OrderService },
+  { provide: 'IOrderService', useClass: OrderService },
   {
     provide: 'FindOrderUseCase',
     inject: ['IRepository<Order>'],
@@ -21,15 +22,20 @@ export const OrderProviders: Provider[] = [
   },
   {
     provide: 'FindByIdOrderUseCase',
-    inject: ['IRepository<Order>'],
-    useFactory: (repository: IRepository<Order>): FindByIdOrderUseCase =>
-      new FindByIdOrderUseCase(repository),
+    inject: ['IRepository<Order>', 'IPaymentHttpService'],
+    useFactory: (
+      repository: IRepository<Order>,
+      paymentHttpService: IPaymentHttpService,
+    ): FindByIdOrderUseCase =>
+      new FindByIdOrderUseCase(repository, paymentHttpService),
   },
   {
     provide: 'EditOrderUseCase',
-    inject: ['IRepository<Order>'],
-    useFactory: (repository: IRepository<Order>): EditOrderUseCase =>
-      new EditOrderUseCase(repository),
+    inject: ['IRepository<Order>', 'IPaymentHttpService'],
+    useFactory: (
+      repository: IRepository<Order>,
+      paymentHttpService: IPaymentHttpService,
+    ): EditOrderUseCase => new EditOrderUseCase(repository, paymentHttpService),
   },
   {
     provide: 'DeleteOrderUseCase',
@@ -39,11 +45,20 @@ export const OrderProviders: Provider[] = [
   },
   {
     provide: 'CreateOrderUseCase',
-    inject: ['IRepository<Order>', 'ICustomerHttpService'],
+    inject: [
+      'IRepository<Order>',
+      'ICustomerHttpService',
+      'IPaymentHttpService',
+    ],
     useFactory: (
       repository: IRepository<Order>,
       customerHttpService: ICustomerHttpService,
+      paymentHttpService: IPaymentHttpService,
     ): CreateOrderUseCase =>
-      new CreateOrderUseCase(repository, customerHttpService),
+      new CreateOrderUseCase(
+        repository,
+        customerHttpService,
+        paymentHttpService,
+      ),
   },
 ];
