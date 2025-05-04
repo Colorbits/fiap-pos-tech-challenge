@@ -11,13 +11,14 @@ export class OrderItemDto {
   customerId: number;
 
   @IsNotEmpty()
-  productId: number;
-
-  @IsNotEmpty()
   orderId: number;
 
   @IsNotEmpty()
   quantity: number;
+
+  @IsNotEmpty()
+  productId: number;
+
   @IsNotEmpty()
   productPrice: string;
 }

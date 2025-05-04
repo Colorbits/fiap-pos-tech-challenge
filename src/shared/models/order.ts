@@ -3,6 +3,7 @@ import { IsNotEmpty, IsOptional } from 'class-validator';
 import { OrderItem, OrderItemDto } from './orderItem';
 import { OrderStatusEnum } from '../enums';
 import { User } from './user';
+import { Payment } from './payment';
 
 export class OrderDto {
   @IsOptional()
@@ -21,6 +22,25 @@ export class OrderDto {
   status?: Order['status'];
 }
 
+export class OrderResponseDto {
+  @IsOptional()
+  id?: number;
+
+  @IsNotEmpty()
+  userId: string;
+
+  @IsOptional()
+  totalPrice: string;
+
+  @IsOptional()
+  items?: Array<OrderItemDto>;
+
+  @IsOptional()
+  status?: Order['status'];
+  @IsOptional()
+  paymentStatus?: Payment['status'];
+}
+
 export class FilterOrderDto {
   @IsOptional()
   id?: number;
@@ -29,7 +49,7 @@ export class FilterOrderDto {
   ids?: Array<number>;
 
   @IsOptional()
-  userId?: number;
+  userId?: string;
 
   @IsOptional()
   status?: Order['status'];

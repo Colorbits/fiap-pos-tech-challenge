@@ -19,18 +19,21 @@ import {
   ApiQuery,
   ApiParam,
 } from '@nestjs/swagger';
-import { IService } from '../../application/iService';
-import { FilterOrderDto, Order, OrderDto } from '../../shared/models';
+import {
+  FilterOrderDto,
+  Order,
+  OrderDto,
+  OrderResponseDto,
+} from '../../shared/models';
 import { CacheInterceptor } from '@nestjs/cache-manager';
+import { IOrderService } from '../../application/order/service/IOrderService';
 
 @ApiTags('Pedidos')
 @Controller('order')
 export class OrderApi {
   private readonly logger = new Logger(OrderApi.name);
 
-  constructor(
-    @Inject('IService<Order>') private orderService: IService<Order>,
-  ) {}
+  constructor(@Inject('IOrderService') private orderService: IOrderService) {}
 
   @ApiOperation({
     summary: 'Listar pedidos com filtro opcional',
@@ -83,7 +86,7 @@ export class OrderApi {
   })
   @Get('/:id')
   @UseInterceptors(CacheInterceptor)
-  findById(@Param('id') id?: number): Promise<Order> {
+  findById(@Param('id') id?: number): Promise<OrderResponseDto> {
     return this.orderService.findById(id);
   }
 
@@ -102,7 +105,7 @@ export class OrderApi {
     type: Order,
   })
   @Put('/confirm/:id')
-  confirmOrder(@Param('id') id?: number): Promise<Order> {
+  confirmOrder(@Param('id') id?: number): Promise<OrderResponseDto> {
     return this.orderService.edit({ id, status: OrderStatusEnum.CONFIRMED });
   }
 
@@ -122,7 +125,7 @@ export class OrderApi {
     type: Order,
   })
   @Put('/in-progress/:id')
-  orderInProgres(@Param('id') id?: number): Promise<Order> {
+  orderInProgres(@Param('id') id?: number): Promise<OrderResponseDto> {
     return this.orderService.edit({ id, status: OrderStatusEnum.IN_PROGRESS });
   }
 
@@ -142,7 +145,7 @@ export class OrderApi {
     type: Order,
   })
   @Put('/finish/:id')
-  finishOrder(@Param('id') id?: number): Promise<Order> {
+  finishOrder(@Param('id') id?: number): Promise<OrderResponseDto> {
     return this.orderService.edit({ id, status: OrderStatusEnum.FINISHED });
   }
 
@@ -161,7 +164,7 @@ export class OrderApi {
     type: Order,
   })
   @Put('/cancel/:id')
-  cancelOrder(@Param('id') id?: number): Promise<Order> {
+  cancelOrder(@Param('id') id?: number): Promise<OrderResponseDto> {
     return this.orderService.edit({ id, status: OrderStatusEnum.CANCELED });
   }
 
@@ -179,7 +182,7 @@ export class OrderApi {
     description: 'Dados inválidos para criação do pedido.',
   })
   @Post()
-  async create(@Body() orderDto: OrderDto): Promise<Order> {
+  async create(@Body() orderDto: OrderDto): Promise<OrderResponseDto> {
     const createdOrder = await this.orderService.create(orderDto);
     return createdOrder;
   }

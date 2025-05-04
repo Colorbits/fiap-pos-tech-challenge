@@ -8,7 +8,7 @@ import {
   Post,
 } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
-import { PaymentDto } from '../../shared/models/payment';
+import { PaymentCallbackDto, PaymentDto } from '../../shared/models/payment';
 import { IPaymentService } from '../../application';
 
 @ApiTags('Pagamentos')
@@ -42,18 +42,39 @@ export class PaymentApi {
   }
 
   @ApiOperation({
-    summary: 'Status de pagamento do pedido.',
-    description: 'Consultar status de pagamento de um pedido.',
+    summary: 'Confirmar pagamento de um pedido',
+    description: 'Endpoint para confirmar o pagamento de um pedido.',
   })
   @ApiResponse({
     status: 200,
-    description: 'Status do pedido',
+    description: 'Dados do pedido',
+    schema: {
+      type: 'string',
+      example: 'https://gateway.pagamento.com/pay/12345',
+    },
   })
   @ApiResponse({
     status: 400,
     description: 'Dados inválidos para o pagamento.',
   })
-  @Get('/status/:orderId')
+  @Post('/callback')
+  async paymentCallback(@Body() paymentDto: PaymentCallbackDto) {
+    return this.paymentService.paymentCallback(paymentDto);
+  }
+
+  @ApiOperation({
+    summary: 'Status de pagamento do pedido.',
+    description: 'Consultar status de pagamento de um pedido.',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Dados do pedido',
+  })
+  @ApiResponse({
+    status: 400,
+    description: 'Dados inválidos para o pagamento.',
+  })
+  @Get('/:orderId')
   async getPayment(@Param('orderId') orderId?: number) {
     return this.paymentService.getPayment(orderId);
   }
