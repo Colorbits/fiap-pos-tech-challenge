@@ -7,10 +7,8 @@ import {
   OrderEntity,
   ProductEntity,
   ProductImageEntity,
-  CustomerEntity,
   CategoryEntity,
   OrderItemEntity,
-  UserEntity,
 } from '../../entities';
 
 dotenvConfig({ path: process.cwd() + '/envs/.env.local' });
@@ -48,13 +46,11 @@ if (
           password: `${process.env.POSTGRES_PASSWORD}`,
           database: `${process.env.POSTGRES_DATABASE}`,
           entities: [
-            CustomerEntity,
             ProductEntity,
             ProductImageEntity,
             CategoryEntity,
             OrderEntity,
             OrderItemEntity,
-            UserEntity,
           ],
           synchronize: DatabaseConstants.DATABASE_SYNCHRONIZE,
           logging: DatabaseConstants.DATABASE_LOGGING,

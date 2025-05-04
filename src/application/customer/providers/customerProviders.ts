@@ -1,34 +1,27 @@
 import { Provider } from '@nestjs/common';
-import { IRepository } from '../../../infrastructure/repositories/iRepository';
-import { Customer, User } from '../../../shared';
 import {
   CreateUserAndCustomerUsecase,
-  FindAllCustomerUsecase,
   FindByIdCustomerUsecase,
 } from '../useCases';
 import { CustomerService } from '../service/customerService';
+import { ICustomerHttpService } from '../../../infrastructure/microservices/customer/iCustomerHttpService';
 
 export const CustomerProviders: Provider[] = [
-  { provide: 'IService<Customer>', useClass: CustomerService },
+  { provide: 'ICustomerService', useClass: CustomerService },
   {
     provide: 'CreateUserAndCustomerUsecase',
-    inject: ['IRepository<Customer>', 'IRepository<User>'],
+    inject: ['ICustomerHttpService'],
     useFactory: (
-      repository: IRepository<Customer>,
-      repositoryUser: IRepository<User>,
+      customerHttpService: ICustomerHttpService,
     ): CreateUserAndCustomerUsecase =>
-      new CreateUserAndCustomerUsecase(repository, repositoryUser),
-  },
-  {
-    provide: 'FindAllCustomerUsecase',
-    inject: ['IRepository<Customer>'],
-    useFactory: (repository: IRepository<Customer>): FindAllCustomerUsecase =>
-      new FindAllCustomerUsecase(repository),
+      new CreateUserAndCustomerUsecase(customerHttpService),
   },
   {
     provide: 'FindByIdCustomerUsecase',
-    inject: ['IRepository<Customer>'],
-    useFactory: (repository: IRepository<Customer>): FindByIdCustomerUsecase =>
-      new FindByIdCustomerUsecase(repository),
+    inject: ['ICustomerHttpService'],
+    useFactory: (
+      customerHttpService: ICustomerHttpService,
+    ): FindByIdCustomerUsecase =>
+      new FindByIdCustomerUsecase(customerHttpService),
   },
 ];

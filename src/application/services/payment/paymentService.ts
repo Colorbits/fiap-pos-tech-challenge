@@ -12,7 +12,7 @@ export class PaymentService implements IPaymentService {
     @Inject('IRepository<Order>')
     private readonly orderRepository: IRepository<Order>,
     @Inject('IPaymentHttpService')
-    private readonly PaymentHttpService: IPaymentHttpService,
+    private readonly paymentHttpService: IPaymentHttpService,
   ) {}
 
   async payOrder(paymentDto: PaymentDto): Promise<string> {
@@ -52,7 +52,7 @@ export class PaymentService implements IPaymentService {
       this.logger.log(`createPaymentDto ${JSON.stringify(createPaymentDto)}`);
 
       const response =
-        await this.PaymentHttpService.createPayment(createPaymentDto);
+        await this.paymentHttpService.createPayment(createPaymentDto);
       this.logger.log(`Payment created response ${JSON.stringify(response)}`);
 
       return response.paymentUrl;
@@ -71,7 +71,7 @@ export class PaymentService implements IPaymentService {
       throw new HttpException('Order Not Found', HttpStatus.NOT_FOUND);
     }
 
-    const response = await this.PaymentHttpService.getPayment(orderId);
+    const response = await this.paymentHttpService.getPayment(orderId);
     this.logger.log(`Payment status response ${response}`);
 
     return response;

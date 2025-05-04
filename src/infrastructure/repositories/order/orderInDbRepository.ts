@@ -17,7 +17,7 @@ export class OrderInDbRepository implements IRepository<Order> {
       const createdOrder = await this.repository.save({
         status: order.status,
         totalPrice: order.totalPrice,
-        user: order.user,
+        userId: order.userId,
       });
       return createdOrder;
     } catch (error) {
@@ -78,7 +78,7 @@ export class OrderInDbRepository implements IRepository<Order> {
           status: orderEntity.status,
           totalPrice: orderEntity.totalPrice,
           items: orderEntity.items,
-          user: orderEntity.user,
+          userId: orderEntity.userId,
         }));
       })
       .catch((error) => {

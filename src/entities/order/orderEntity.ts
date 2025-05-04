@@ -1,14 +1,6 @@
-import {
-  Entity,
-  Column,
-  PrimaryGeneratedColumn,
-  ManyToOne,
-  OneToMany,
-  JoinColumn,
-} from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 import { OrderItemEntity } from '../orderItem';
 import { OrderStatusEnum } from '../../shared';
-import { UserEntity } from '../user';
 
 @Entity({ name: 'Order' })
 export class OrderEntity {
@@ -21,9 +13,8 @@ export class OrderEntity {
   @Column({ name: 'total_price' })
   totalPrice: string;
 
-  @ManyToOne(() => UserEntity)
-  @JoinColumn()
-  user: UserEntity;
+  @Column({ name: 'user_id' })
+  userId: string;
 
   @OneToMany(() => OrderItemEntity, (orderItem) => orderItem.order)
   items: OrderItemEntity[];

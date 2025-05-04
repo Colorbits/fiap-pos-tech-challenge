@@ -60,10 +60,7 @@ export class OrderApi {
   })
   @Get()
   find(@Query() filterOrderDto: FilterOrderDto): Promise<Order[]> {
-    return this.orderService.find(
-      filterOrderDto.customerId,
-      filterOrderDto.status,
-    );
+    return this.orderService.find(filterOrderDto.userId, filterOrderDto.status);
   }
 
   @ApiOperation({

@@ -9,7 +9,7 @@ export class OrderDto {
   id?: number;
 
   @IsNotEmpty()
-  customerId: number;
+  userId: string;
 
   @IsOptional()
   totalPrice: string;
@@ -29,7 +29,7 @@ export class FilterOrderDto {
   ids?: Array<number>;
 
   @IsOptional()
-  customerId?: number;
+  userId?: number;
 
   @IsOptional()
   status?: Order['status'];
@@ -39,13 +39,13 @@ export class Order {
   id?: number;
   status: OrderStatusEnum;
   totalPrice: string;
-  user: User;
+  userId: User['id'];
   items: OrderItem[];
 
-  constructor(orderDto: OrderDto, user: User) {
+  constructor(orderDto: OrderDto, userId: User['id']) {
     this.id = orderDto?.id || randomInt(999);
     this.status = orderDto.status;
-    this.user = user;
+    this.userId = userId;
     this.items = [];
   }
 }
