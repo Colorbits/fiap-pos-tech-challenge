@@ -1,16 +1,20 @@
 import { randomInt } from 'crypto';
 import { IsNotEmpty, IsOptional } from 'class-validator';
-import { Product } from './product';
 
 export class ProductImageDto {
   @IsOptional()
-  id?: number;
+  id?: string;
 
   @IsNotEmpty()
   productId: number;
 
-  @IsNotEmpty()
-  path: string;
+  @IsOptional()
+  path?: string;
+
+  @IsOptional()
+  filename?: string;
+  @IsOptional()
+  file?: Express.Multer.File;
 }
 
 export class FilterProductImageDto {
@@ -19,13 +23,15 @@ export class FilterProductImageDto {
 }
 
 export class ProductImage {
-  id?: number;
-  path: string;
-  product: Product;
+  id?: string;
+  path?: string;
+  productId: number;
+  filename?: string;
 
-  constructor(productImageDto: ProductImageDto, product: Product) {
-    this.id = productImageDto?.id || randomInt(999);
+  constructor(productImageDto: ProductImageDto) {
+    this.id = productImageDto?.id || `${randomInt(999)}`;
     this.path = productImageDto.path;
-    this.product = product;
+    this.productId = productImageDto.productId;
+    this.filename = productImageDto.filename;
   }
 }

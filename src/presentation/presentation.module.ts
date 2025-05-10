@@ -8,7 +8,6 @@ import {
   CategoryApi,
   CustomerApi,
   OrderItemApi,
-  ProductImageApi,
 } from './api';
 import { ApplicationModule } from '../application';
 
@@ -22,7 +21,6 @@ import { ApplicationModule } from '../application';
     CategoryApi,
     CustomerApi,
     OrderItemApi,
-    ProductImageApi,
   ],
 })
 export class PresentationModule {}

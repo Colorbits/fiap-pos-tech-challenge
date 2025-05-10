@@ -6,7 +6,6 @@ import { DatabaseConstants } from './postgres.constants';
 import {
   OrderEntity,
   ProductEntity,
-  ProductImageEntity,
   CategoryEntity,
   OrderItemEntity,
 } from '../../entities';
@@ -47,7 +46,6 @@ if (
           database: `${process.env.POSTGRES_DATABASE}`,
           entities: [
             ProductEntity,
-            ProductImageEntity,
             CategoryEntity,
             OrderEntity,
             OrderItemEntity,
