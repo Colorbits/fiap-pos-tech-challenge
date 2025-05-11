@@ -3,7 +3,7 @@ import { IsOptional } from 'class-validator';
 
 export class UserDto {
   @IsOptional()
-  id?: number;
+  id?: string;
 }
 
 export class FilterUserDto {
@@ -12,9 +12,9 @@ export class FilterUserDto {
 }
 
 export class User {
-  id?: number;
+  id?: string;
 
   constructor(userDto: UserDto) {
-    this.id = userDto?.id || randomInt(999);
+    this.id = userDto?.id || `${randomInt(999)}`;
   }
 }

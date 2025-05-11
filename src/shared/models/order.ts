@@ -3,13 +3,14 @@ import { IsNotEmpty, IsOptional } from 'class-validator';
 import { OrderItem, OrderItemDto } from './orderItem';
 import { OrderStatusEnum } from '../enums';
 import { User } from './user';
+import { Payment } from './payment';
 
 export class OrderDto {
   @IsOptional()
   id?: number;
 
   @IsNotEmpty()
-  customerId: number;
+  userId: string;
 
   @IsOptional()
   totalPrice: string;
@@ -21,6 +22,25 @@ export class OrderDto {
   status?: Order['status'];
 }
 
+export class OrderResponseDto {
+  @IsOptional()
+  id?: number;
+
+  @IsNotEmpty()
+  userId: string;
+
+  @IsOptional()
+  totalPrice: string;
+
+  @IsOptional()
+  items?: Array<OrderItemDto>;
+
+  @IsOptional()
+  status?: Order['status'];
+  @IsOptional()
+  paymentStatus?: Payment['status'];
+}
+
 export class FilterOrderDto {
   @IsOptional()
   id?: number;
@@ -29,7 +49,7 @@ export class FilterOrderDto {
   ids?: Array<number>;
 
   @IsOptional()
-  customerId?: number;
+  userId?: string;
 
   @IsOptional()
   status?: Order['status'];
@@ -39,13 +59,13 @@ export class Order {
   id?: number;
   status: OrderStatusEnum;
   totalPrice: string;
-  user: User;
+  userId: User['id'];
   items: OrderItem[];
 
-  constructor(orderDto: OrderDto, user: User) {
+  constructor(orderDto: OrderDto, userId: User['id']) {
     this.id = orderDto?.id || randomInt(999);
     this.status = orderDto.status;
-    this.user = user;
+    this.userId = userId;
     this.items = [];
   }
 }

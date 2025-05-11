@@ -1,6 +1,6 @@
 import { Provider } from '@nestjs/common';
 import { IRepository } from '../../../infrastructure/repositories/iRepository';
-import { Customer, Order } from '../../../shared';
+import { Order } from '../../../shared';
 import {
   CreateOrderUseCase,
   DeleteOrderUseCase,
@@ -9,9 +9,11 @@ import {
   FindOrderUseCase,
 } from '../useCases';
 import { OrderService } from '../service';
+import { ICustomerHttpService } from '../../../infrastructure/microservices/customer/iCustomerHttpService';
+import { IPaymentHttpService } from '../../../infrastructure/microservices/payment/IPaymentHttpService';
 
 export const OrderProviders: Provider[] = [
-  { provide: 'IService<Order>', useClass: OrderService },
+  { provide: 'IOrderService', useClass: OrderService },
   {
     provide: 'FindOrderUseCase',
     inject: ['IRepository<Order>'],
@@ -20,15 +22,20 @@ export const OrderProviders: Provider[] = [
   },
   {
     provide: 'FindByIdOrderUseCase',
-    inject: ['IRepository<Order>'],
-    useFactory: (repository: IRepository<Order>): FindByIdOrderUseCase =>
-      new FindByIdOrderUseCase(repository),
+    inject: ['IRepository<Order>', 'IPaymentHttpService'],
+    useFactory: (
+      repository: IRepository<Order>,
+      paymentHttpService: IPaymentHttpService,
+    ): FindByIdOrderUseCase =>
+      new FindByIdOrderUseCase(repository, paymentHttpService),
   },
   {
     provide: 'EditOrderUseCase',
-    inject: ['IRepository<Order>'],
-    useFactory: (repository: IRepository<Order>): EditOrderUseCase =>
-      new EditOrderUseCase(repository),
+    inject: ['IRepository<Order>', 'IPaymentHttpService'],
+    useFactory: (
+      repository: IRepository<Order>,
+      paymentHttpService: IPaymentHttpService,
+    ): EditOrderUseCase => new EditOrderUseCase(repository, paymentHttpService),
   },
   {
     provide: 'DeleteOrderUseCase',
@@ -38,11 +45,20 @@ export const OrderProviders: Provider[] = [
   },
   {
     provide: 'CreateOrderUseCase',
-    inject: ['IRepository<Order>', 'IRepository<Customer>'],
+    inject: [
+      'IRepository<Order>',
+      'ICustomerHttpService',
+      'IPaymentHttpService',
+    ],
     useFactory: (
       repository: IRepository<Order>,
-      customerRepository: IRepository<Customer>,
+      customerHttpService: ICustomerHttpService,
+      paymentHttpService: IPaymentHttpService,
     ): CreateOrderUseCase =>
-      new CreateOrderUseCase(repository, customerRepository),
+      new CreateOrderUseCase(
+        repository,
+        customerHttpService,
+        paymentHttpService,
+      ),
   },
 ];
