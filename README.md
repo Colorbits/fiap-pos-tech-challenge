@@ -101,6 +101,7 @@ Cada produto pode conter uma ou mais imagens, armazenadas na tabela ProductImage
 ![Arquitetura Clean](https://github.com/GabrielUmbelino/fiap-pos-tech-challenge/blob/main/docs/Fase%202/clean-architecture.jpg?raw=true)
 
 ##### Diagrama de Arquitetura
+![Diagrama de Arquitetura](https://github.com/Colorbits/fiap-pos-tech-challenge/blob/main/docs/Fase%204/microservice-diagram.png?raw=true)
 
 
 
