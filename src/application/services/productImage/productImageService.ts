@@ -1,44 +1,24 @@
+import { IProductImageHttpService } from './../../../infrastructure/microservices/productImage/iProductImageHttpService';
 import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
-import { IService } from '../../iService';
-import { Product, ProductImage, ProductImageDto } from '../../../shared/models';
+import { Product, ProductImage } from '../../../shared/models';
 import { IRepository } from '../../../infrastructure/repositories/iRepository';
+import { IProductImageService } from './IProductImageService';
 
 @Injectable()
-export class ProductImageService implements IService<ProductImage> {
+export class ProductImageService implements IProductImageService {
   constructor(
-    @Inject('IRepository<ProductImage>')
-    private readonly productImageRepository: IRepository<ProductImage>,
+    @Inject('IProductImageHttpService')
+    private readonly productImageHttpService: IProductImageHttpService,
     @Inject('IRepository<Product>')
     private productRepository: IRepository<Product>,
   ) {}
-  edit(): Promise<ProductImage> {
-    throw new HttpException('Method not implemented.', HttpStatus.FORBIDDEN);
-  }
+  async getProductImages(productId: ProductImage['productId']) {
+    const product = await this.productRepository.findById(productId);
 
-  findAll(): Promise<ProductImage[]> {
-    throw new HttpException('Method not implemented.', HttpStatus.FORBIDDEN);
-  }
+    if (!product) {
+      throw new HttpException('Product Not Found', HttpStatus.NOT_FOUND);
+    }
 
-  async create(productImageDto: ProductImageDto): Promise<ProductImage> {
-    const product = await this.productRepository.findById(
-      productImageDto.productId,
-    );
-    const productImage: ProductImage = {
-      path: productImageDto.path,
-      product,
-    };
-    return this.productImageRepository.create(productImage);
-  }
-
-  find(productId: number): Promise<ProductImage[]> {
-    return this.productImageRepository.find(productId);
-  }
-
-  findById(id: ProductImage['id']): Promise<ProductImage> {
-    return this.productImageRepository.findById(id);
-  }
-
-  async delete(id: ProductImage['id']): Promise<void> {
-    return this.productImageRepository.delete(id);
+    return this.productImageHttpService.getProductImages(productId);
   }
 }

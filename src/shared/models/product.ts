@@ -40,13 +40,19 @@ export class Product {
   price: string;
   status: ProductStatusEnum;
   category: Category;
+  productImages?: Array<string>;
 
-  constructor(productDto: ProductDto, category: Category) {
+  constructor(
+    productDto: ProductDto,
+    category: Category,
+    productImages?: Array<string>,
+  ) {
     this.id = productDto?.id || randomInt(999);
     this.name = productDto.name;
     this.description = productDto.description;
     this.price = productDto.price;
     this.status = productDto.status;
     this.category = category;
+    this.productImages = productImages || [];
   }
 }

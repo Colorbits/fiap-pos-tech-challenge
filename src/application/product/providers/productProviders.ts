@@ -9,6 +9,7 @@ import {
   FindProductUsecase,
 } from '../useCases';
 import { ProductService } from '../service/productService';
+import { IProductImageService } from '../../services/productImage/IProductImageService';
 
 export const ProductProviders: Provider[] = [
   { provide: 'IService<Product>', useClass: ProductService },
@@ -38,9 +39,12 @@ export const ProductProviders: Provider[] = [
   },
   {
     provide: 'FindByIdProductUsecase',
-    inject: ['IRepository<Product>'],
-    useFactory: (repository: IRepository<Product>): FindByIdProductUsecase =>
-      new FindByIdProductUsecase(repository),
+    inject: ['IRepository<Product>', 'IProductImageService'],
+    useFactory: (
+      repository: IRepository<Product>,
+      productImageService: IProductImageService,
+    ): FindByIdProductUsecase =>
+      new FindByIdProductUsecase(repository, productImageService),
   },
   {
     provide: 'FindProductUsecase',

@@ -1,13 +1,6 @@
-import {
-  Column,
-  Entity,
-  PrimaryGeneratedColumn,
-  ManyToOne,
-  OneToMany,
-} from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
 import { ProductStatusEnum } from '../../shared';
 import { CategoryEntity } from '../category';
-import { ProductImageEntity } from '../productImage/productImageEntity';
 
 @Entity({ name: 'Product' })
 export class ProductEntity {
@@ -30,7 +23,4 @@ export class ProductEntity {
 
   @Column({ name: 'description', nullable: true })
   description: string;
-
-  @OneToMany(() => ProductImageEntity, (productImage) => productImage.product)
-  productImages: ProductImageEntity[];
 }
