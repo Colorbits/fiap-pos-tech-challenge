@@ -1,0 +1,35 @@
+name: Build and publish image to Docker Hub
+on:
+  pull_request:
+      branches:
+        - main
+jobs:
+  test-ci:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [20.x]
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ matrix.node-version }}
+    - run: npm ci
+    - name: Run tests
+      run: npm run test
+    - name: Run tests coverage
+      run: npm run coverage
+    - name: Check code coverage
+      run: |
+        TOTAL_LINES=$(cat ./coverage/coverage-final.json | jq '[.[].statementMap | length] | add')
+        COVERED_LINES=$(cat ./coverage/coverage-final.json | jq '[.[].s | to_entries | map(select(.value > 0)) | length] | add')
+        COVERAGE=$(echo "scale=2; ($COVERED_LINES / $TOTAL_LINES) * 100" | bc)
+        echo "Total coverage: $COVERAGE%"
+        if (( $(echo "$COVERAGE < 70" | bc -l) )); then
+          echo "Error: Code coverage is below 70%"
+          exit 1
+        fi
+        echo "Code coverage is above 70% ✅"

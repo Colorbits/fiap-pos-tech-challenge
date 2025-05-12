@@ -1,10 +1,8 @@
 
 # Documentação - Tech Challenge FIAP
-### Grupo 33 - 9SOAT
+### Grupo 23 - 9SOAT
 
- - Nathalia Chaves
  - Gabriel Ferreira Umbelino
- - Juliane Midori
 
 
 
@@ -100,7 +98,8 @@ Cada produto pode conter uma ou mais imagens, armazenadas na tabela ProductImage
 
 ![Arquitetura Clean](https://github.com/GabrielUmbelino/fiap-pos-tech-challenge/blob/main/docs/Fase%202/clean-architecture.jpg?raw=true)
 
-
+##### Diagrama de Arquitetura
+![Diagrama de Arquitetura](https://github.com/Colorbits/fiap-pos-tech-challenge/blob/main/docs/Fase%204/microservice-diagram.png?raw=true)
 
 
 
